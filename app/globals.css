@@ -1,26 +1,141 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-yellow: #E8B84B;
+  --color-yellow-pale: #FDF3DC;
+  --color-yellow-light: #F5D98A;
+  --color-brown: #6B4226;
+  --color-brown-mid: #8B5A3C;
+  --color-brown-light: #C4956A;
+  --color-brown-pale: #F2E8DC;
+  --color-red: #C0392B;
+  --color-cream: #FBF7F0;
+  --color-dark: #2C1810;
+  --color-text: #3D2314;
+  --color-text-light: #7A5C4A;
+
+  --font-myeongjo: var(--font-nanum-myeongjo);
+  --font-playfair: var(--font-playfair-display);
+  --font-sans: var(--font-noto-sans-kr);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Noto Sans KR", var(--font-noto-sans-kr), sans-serif;
+  background: #FBF7F0;
+  color: #3D2314;
+  overflow-x: hidden;
+}
+
+/* ─ nav link hover underline ─────────────────────────────────── */
+.nav-link { position: relative; padding-bottom: 2px; }
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 1.5px;
+  background: #E8B84B;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s;
+}
+.nav-link:hover::after { transform: scaleX(1); }
+
+/* ─ eyebrow yellow line ───────────────────────────────────────── */
+.eyebrow-line { display: flex; align-items: center; gap: 10px; }
+.eyebrow-line::before { content: ""; width: 28px; height: 1px; background: #E8B84B; flex-shrink: 0; }
+.eyebrow-line-lg::before { width: 32px; }
+
+/* ─ grid classes ─────────────────────────────────────────────── */
+.work-cat-grid  { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+.all-work-grid  { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.journal-card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+
+/* ─ animations ────────────────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes floatUD {
+  0%, 100% { transform: translateY(-50%) translateY(0); }
+  50%      { transform: translateY(-50%) translateY(-18px); }
+}
+
+.anim-fade-1 { animation: fadeUp 0.8s ease both; }
+.anim-fade-2 { animation: fadeUp 0.8s 0.10s ease both; }
+.anim-fade-3 { animation: fadeUp 0.8s 0.15s ease both; }
+.anim-fade-4 { animation: fadeUp 0.8s 0.20s ease both; }
+.anim-fade-5 { animation: fadeUp 0.8s 0.25s ease both; }
+.anim-fade-6 { animation: fadeUp 0.8s 0.30s ease both; }
+
+.anim-float   { animation: floatUD 5s ease-in-out infinite; }
+.anim-float-2 { animation: floatUD 7s 1s ease-in-out infinite; }
+
+/* ─ hover helpers (서버 컴포넌트용) ──────────────────────────── */
+.hover-fade { transition: opacity 0.2s; }
+.hover-fade:hover { opacity: 0.75; }
+
+/* ─ Tiptap 에디터 ────────────────────────────────────────────── */
+.tiptap-editor-content {
+  min-height: 320px;
+  padding: 16px 18px;
+  font-size: 15px;
+  color: #3D2314;
+  line-height: 1.85;
+  font-weight: 300;
+  outline: none;
+}
+.tiptap-editor-content p { margin-bottom: 0.75em; }
+.tiptap-editor-content h1 { font-family: var(--font-nanum-myeongjo); font-size: 2em; font-weight: 800; color: #2C1810; margin: 1.2em 0 0.4em; line-height: 1.3; }
+.tiptap-editor-content h2 { font-family: var(--font-nanum-myeongjo); font-size: 1.5em; font-weight: 700; color: #2C1810; margin: 1em 0 0.4em; line-height: 1.35; }
+.tiptap-editor-content h3 { font-family: var(--font-nanum-myeongjo); font-size: 1.2em; font-weight: 700; color: #2C1810; margin: 0.9em 0 0.3em; line-height: 1.4; }
+.tiptap-editor-content strong { font-weight: 700; color: #2C1810; }
+.tiptap-editor-content em { font-style: italic; }
+.tiptap-editor-content u { text-decoration: underline; }
+.tiptap-editor-content s { text-decoration: line-through; }
+.tiptap-editor-content a { color: #6B4226; text-decoration: underline; }
+.tiptap-editor-content img { max-width: 100%; border-radius: 8px; margin: 12px 0; display: block; }
+.tiptap-editor-content ul { padding-left: 1.4em; margin-bottom: 0.75em; list-style: disc; }
+.tiptap-editor-content ol { padding-left: 1.4em; margin-bottom: 0.75em; list-style: decimal; }
+.tiptap-editor-content li { margin-bottom: 0.25em; }
+.tiptap-editor-content blockquote { border-left: 3px solid #E8B84B; padding-left: 1em; margin: 1em 0; color: #7A5C4A; font-style: italic; }
+.tiptap-editor-content p.is-editor-empty:first-child::before { content: attr(data-placeholder); color: rgba(107,66,38,0.35); pointer-events: none; float: left; height: 0; }
+
+/* ─ Tiptap 게시글 렌더링 ─────────────────────────────────────── */
+.journal-content h1 { font-family: var(--font-nanum-myeongjo); font-size: 2em; font-weight: 800; color: #2C1810; margin: 1.2em 0 0.4em; line-height: 1.3; }
+.journal-content h2 { font-family: var(--font-nanum-myeongjo); font-size: 1.5em; font-weight: 700; color: #2C1810; margin: 1em 0 0.4em; line-height: 1.35; }
+.journal-content h3 { font-family: var(--font-nanum-myeongjo); font-size: 1.2em; font-weight: 700; color: #2C1810; margin: 0.9em 0 0.3em; line-height: 1.4; }
+.journal-content p { margin-bottom: 1em; }
+.journal-content strong { font-weight: 700; color: #2C1810; }
+.journal-content em { font-style: italic; }
+.journal-content u { text-decoration: underline; }
+.journal-content s { text-decoration: line-through; }
+.journal-content a { color: #6B4226; text-decoration: underline; }
+.journal-content a:hover { color: #C0392B; }
+.journal-content img { max-width: 100%; border-radius: 10px; margin: 20px 0; display: block; }
+.journal-content ul { padding-left: 1.5em; margin-bottom: 1em; list-style: disc; }
+.journal-content ol { padding-left: 1.5em; margin-bottom: 1em; list-style: decimal; }
+.journal-content li { margin-bottom: 0.4em; }
+.journal-content blockquote { border-left: 3px solid #E8B84B; padding-left: 1.2em; margin: 1.5em 0; color: #7A5C4A; font-style: italic; }
+
+/* ─ admin stat card hover ────────────────────────────────────── */
+.admin-stat-card { transition: transform 0.2s, box-shadow 0.2s; }
+.admin-stat-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(107,66,38,0.08); }
+
+/* ─ responsive — 시안 기준 900px ─────────────────────────────── */
+@media (max-width: 900px) {
+  .r-nav    { padding: 16px 24px !important; }
+  .r-hero   { padding: 90px 24px 60px !important; }
+  .r-section { padding: 60px 24px !important; }
+  .r-footer  { padding: 24px 24px !important; flex-direction: column !important; text-align: center !important; gap: 10px !important; }
+
+  .r-nav-links { display: none !important; }
+  .r-hero-circles { display: none !important; }
+
+  .work-cat-grid  { grid-template-columns: 1fr !important; }
+  .all-work-grid  { grid-template-columns: 1fr !important; }
+  .journal-card-grid { grid-template-columns: 1fr !important; }
+
+  .r-work-header { flex-direction: column !important; align-items: flex-start !important; gap: 16px !important; }
 }
