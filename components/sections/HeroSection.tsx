@@ -83,7 +83,7 @@ export default function HeroSection() {
             marginBottom: 8,
           }}
         >
-          옥은서
+          은서
         </h1>
 
         {/* 이름 (영문) */}

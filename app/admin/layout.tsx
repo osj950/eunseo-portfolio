@@ -7,12 +7,13 @@ const NAV = [
   { href: "/admin",             label: "대시보드",   icon: "◆" },
   { href: "/admin/journal",     label: "기록",       icon: "✍️" },
   { href: "/admin/works",       label: "작업물",     icon: "🌐" },
-  { href: "/admin/websites",    label: "홈페이지",   icon: "🏠" },
   { href: "/admin/inquiries",   label: "문의",       icon: "✉️" },
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+
+  if (pathname === "/admin/login") return <>{children}</>;
 
   return (
     <div style={{ minHeight: "100vh", display: "flex", background: "#FBF7F0" }}>

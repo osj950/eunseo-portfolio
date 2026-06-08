@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { Work, WebsiteProject, WORK_CATEGORIES } from "@/lib/types";
+import { Work, WORK_CATEGORIES } from "@/lib/types";
 
 type ThumbVariant = "yellow" | "brown" | "red" | "dark";
 type WorkCat = "all" | "web" | "app" | "video" | "embroidery" | "other";
@@ -41,33 +41,25 @@ const NON_WEB_CATEGORY_WORKS = [
 ];
 
 
-const FALLBACK_PROJECTS: WebsiteProject[] = [
-  { id: "f1", name: "거침없는 우다다학교", description: "Next.js + Google Sheets 연동. 게시판, 후원 신청, 갤러리 포함.", url: "https://udada-school.vercel.app", thumbnail: "", createdAt: "" },
-];
 
 export default function WorkSection() {
   const [open, setOpen] = useState(false);
   const [filter, setFilter] = useState<WorkCat>("all");
 
   const [works, setWorks] = useState<Work[]>([]);
-  const [webProjects, setWebProjects] = useState<WebsiteProject[]>([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [slideIdx, setSlideIdx] = useState(0);
 
   useEffect(() => {
-    fetch("/api/websites")
-      .then((r) => r.json())
-      .then((data) => { if (Array.isArray(data) && data.length > 0) setWebProjects(data); })
-      .catch(() => {});
     fetch("/api/works")
       .then((r) => r.json())
       .then((data) => { if (Array.isArray(data)) setWorks(data); })
       .catch(() => {});
   }, []);
 
-  const projects = webProjects.length > 0 ? webProjects : FALLBACK_PROJECTS;
-  const total = projects.length;
-  const current = projects[slideIdx];
+  const webWorks = works.filter((w) => w.category === "web");
+  const total = webWorks.length;
+  const current = webWorks[slideIdx];
 
   const prev = useCallback(() => setSlideIdx((i) => (i - 1 + total) % total), [total]);
   const next = useCallback(() => setSlideIdx((i) => (i + 1) % total), [total]);
@@ -138,10 +130,9 @@ export default function WorkSection() {
           >
             {/* 상단: 대표 이미지 */}
             <div style={{ aspectRatio: "16/9", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 64, background: THUMB_BG.yellow, overflow: "hidden", position: "relative", flexShrink: 0 }}>
-              {projects[0]?.thumbnail ? (
-                <img src={projects[0].thumbnail} alt="홈페이지 제작" style={{ width: "100%", height: "100%", objectFit: "cover" }} onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
+              {webWorks[0]?.thumbnail ? (
+                <img src={webWorks[0].thumbnail} alt="홈페이지 제작" style={{ width: "100%", height: "100%", objectFit: "cover" }} onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
               ) : "🌱"}
-              {/* 제작 사례 뱃지 */}
               {total > 0 && (
                 <div style={{ position: "absolute", top: 14, right: 14, background: "rgba(44,24,16,0.6)", color: "#F5D98A", fontSize: 10, fontWeight: 500, padding: "4px 10px", borderRadius: 100, letterSpacing: "0.06em" }}>
                   제작 사례 {total}개
@@ -327,15 +318,13 @@ export default function WorkSection() {
               {current?.thumbnail ? (
                 <img
                   src={current.thumbnail}
-                  alt={current.name}
+                  alt={current.title}
                   style={{ width: "100%", height: "100%", objectFit: "cover" }}
                   onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
                 />
               ) : (
                 <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 72 }}>🌱</div>
               )}
-
-              {/* 슬라이드 카운터 */}
               {total > 1 && (
                 <div style={{ position: "absolute", bottom: 14, right: 16, background: "rgba(44,24,16,0.6)", color: "white", fontSize: 11, fontWeight: 500, padding: "4px 12px", borderRadius: 100, letterSpacing: "0.05em" }}>
                   {slideIdx + 1} / {total}
@@ -345,36 +334,31 @@ export default function WorkSection() {
 
             {/* 본문 */}
             <div style={{ padding: "28px 32px 32px" }}>
-              {/* eyebrow */}
               <div style={{ fontFamily: "var(--font-playfair-display)", fontStyle: "italic", fontSize: 11, color: "#E8B84B", letterSpacing: "0.12em", marginBottom: 10 }}>
                 홈페이지 제작
               </div>
-
               <h2 style={{ fontFamily: "var(--font-nanum-myeongjo)", fontSize: "clamp(20px,3vw,26px)", fontWeight: 800, color: "#2C1810", lineHeight: 1.3, marginBottom: 12 }}>
-                {current?.name}
+                {current?.title}
               </h2>
-
               <p style={{ fontSize: 14, color: "#7A5C4A", lineHeight: 1.8, fontWeight: 300, marginBottom: 24 }}>
                 {current?.description}
               </p>
-
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 16 }}>
-                {/* 사이트 보기 버튼 */}
-                <a
-                  href={current?.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "#C0392B", color: "white", padding: "12px 28px", borderRadius: 100, fontSize: 13, fontWeight: 500, textDecoration: "none", transition: "background 0.2s, gap 0.2s" }}
-                  onMouseEnter={(e) => { e.currentTarget.style.background = "#a93226"; e.currentTarget.style.gap = "12px"; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.background = "#C0392B"; e.currentTarget.style.gap = "8px"; }}
-                >
-                  사이트 보기 →
-                </a>
-
-                {/* 닷 인디케이터 */}
+                {current?.url && (
+                  <a
+                    href={current.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "#C0392B", color: "white", padding: "12px 28px", borderRadius: 100, fontSize: 13, fontWeight: 500, textDecoration: "none", transition: "background 0.2s, gap 0.2s" }}
+                    onMouseEnter={(e) => { e.currentTarget.style.background = "#a93226"; e.currentTarget.style.gap = "12px"; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.background = "#C0392B"; e.currentTarget.style.gap = "8px"; }}
+                  >
+                    사이트 보기 →
+                  </a>
+                )}
                 {total > 1 && (
                   <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-                    {projects.map((_, i) => (
+                    {webWorks.map((_, i) => (
                       <button
                         key={i}
                         onClick={() => setSlideIdx(i)}

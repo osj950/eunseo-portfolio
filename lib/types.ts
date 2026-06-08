@@ -9,6 +9,7 @@ export interface Work {
   images: string[];
   tags: string[];
   year: string;
+  url: string;
   createdAt: string;
 }
 

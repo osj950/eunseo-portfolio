@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function MainFooter() {
   return (
     <footer
@@ -18,6 +20,9 @@ export default function MainFooter() {
         Eunseo Ok · 옥은서
       </span>
       <span>배우고, 가르치고, 만드는 사람 🌻</span>
+      <Link href="/admin/login" style={{ color: "rgba(255,255,255,0.15)", fontSize: 11, textDecoration: "none", letterSpacing: "0.08em" }}>
+        ◆
+      </Link>
     </footer>
   );
 }

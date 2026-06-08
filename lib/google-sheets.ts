@@ -141,7 +141,7 @@ export async function getWorks(): Promise<Work[]> {
   try {
     const res = await sheets.spreadsheets.values.get({
       spreadsheetId: SPREADSHEET_ID,
-      range: `${SHEET_WORKS}!A2:I`,
+      range: `${SHEET_WORKS}!A2:J`,
     });
     const rows = res.data.values ?? [];
     return rows.map((r) => ({
@@ -154,6 +154,7 @@ export async function getWorks(): Promise<Work[]> {
       tags: r[6] ? r[6].split(",").map((s: string) => s.trim()) : [],
       year: r[7] ?? "",
       createdAt: r[8] ?? "",
+      url: r[9] ?? "",
     }));
   } catch {
     return [];
@@ -162,17 +163,17 @@ export async function getWorks(): Promise<Work[]> {
 
 export async function createWork(work: Omit<Work, "id" | "createdAt">): Promise<void> {
   const sheets = getSheets();
-  await ensureSheet(sheets, SHEET_WORKS, ["id", "title", "category", "description", "thumbnail", "images", "tags", "year", "createdAt"]);
+  await ensureSheet(sheets, SHEET_WORKS, ["id", "title", "category", "description", "thumbnail", "images", "tags", "year", "createdAt", "url"]);
   const id = Date.now().toString();
   const createdAt = new Date().toISOString();
   await sheets.spreadsheets.values.append({
     spreadsheetId: SPREADSHEET_ID,
-    range: `${SHEET_WORKS}!A:I`,
+    range: `${SHEET_WORKS}!A:J`,
     valueInputOption: "RAW",
     requestBody: {
       values: [[
         id, work.title, work.category, work.description,
-        work.thumbnail, work.images.join(", "), work.tags.join(", "), work.year, createdAt,
+        work.thumbnail, work.images.join(", "), work.tags.join(", "), work.year, createdAt, work.url ?? "",
       ]],
     },
   });
@@ -187,7 +188,7 @@ export async function updateWork(id: string, work: Partial<Work>): Promise<void>
   const existing = works[rowIndex];
   await sheets.spreadsheets.values.update({
     spreadsheetId: SPREADSHEET_ID,
-    range: `${SHEET_WORKS}!A${row}:I${row}`,
+    range: `${SHEET_WORKS}!A${row}:J${row}`,
     valueInputOption: "RAW",
     requestBody: {
       values: [[
@@ -200,6 +201,7 @@ export async function updateWork(id: string, work: Partial<Work>): Promise<void>
         (work.tags ?? existing.tags).join(", "),
         work.year ?? existing.year,
         existing.createdAt,
+        work.url ?? existing.url ?? "",
       ]],
     },
   });

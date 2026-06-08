@@ -5,7 +5,7 @@ import { Work, WORK_CATEGORIES } from "@/lib/types";
 
 const CATEGORIES = WORK_CATEGORIES.filter((c) => c.value !== "all");
 
-const emptyForm = { title: "", category: "other", description: "", thumbnail: "", images: "", tags: "", year: "" };
+const emptyForm = { title: "", category: "other", description: "", thumbnail: "", images: "", tags: "", year: "", url: "" };
 
 export default function AdminWorksPage() {
   const [works, setWorks] = useState<Work[]>([]);
@@ -26,7 +26,7 @@ export default function AdminWorksPage() {
   const openNew = () => { setEditing(null); setForm(emptyForm); setError(null); setShowForm(true); };
   const openEdit = (w: Work) => {
     setEditing(w);
-    setForm({ title: w.title, category: w.category, description: w.description, thumbnail: w.thumbnail, images: w.images.join(", "), tags: w.tags.join(", "), year: w.year });
+    setForm({ title: w.title, category: w.category, description: w.description, thumbnail: w.thumbnail, images: w.images.join(", "), tags: w.tags.join(", "), year: w.year, url: w.url ?? "" });
     setError(null);
     setShowForm(true);
   };
@@ -87,6 +87,7 @@ export default function AdminWorksPage() {
             </h2>
             {[
               { name: "title",     label: "제목 *",                required: true },
+              { name: "url",       label: "사이트 URL (홈페이지·앱 스토어 링크)" },
               { name: "thumbnail", label: "썸네일 URL" },
               { name: "images",    label: "이미지 URL (쉼표 구분)" },
               { name: "tags",      label: "태그 (쉼표 구분)" },
