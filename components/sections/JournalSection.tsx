@@ -2,18 +2,12 @@
 
 import { JournalPost } from "@/lib/types";
 
-const FALLBACK: (JournalPost & { tag: string })[] = [
-  { id: "1", slug: "body-knows-first", title: "몸이 먼저 안다는 것",  excerpt: "SP를 공부하며 자꾸 생각하게 되는 것들. 언어보다 먼저 도착하는 감각에 대해.", date: "2026. 05", tag: "SP · 감각",    content: "", createdAt: "" },
-  { id: "2", slug: "childrens-pace",   title: "아이들의 속도로 걷기", excerpt: "우다다에서 배운 것. 기다리는 것도 가르치는 것이라는 사실.",           date: "2026. 04", tag: "교육 · 청소년", content: "", createdAt: "" },
-  { id: "3", slug: "healing-making",   title: "만드는 것의 치유",     excerpt: "프랑스자수를 놓으면서, 홈페이지를 만들면서 느끼는 것들.",             date: "2026. 03", tag: "만들기 · 치유", content: "", createdAt: "" },
-];
-
 interface Props {
-  posts?: (JournalPost & { tag?: string })[];
+  posts?: JournalPost[];
 }
 
 export default function JournalSection({ posts }: Props) {
-  const items = ((posts && posts.length > 0 ? posts : FALLBACK).slice(0, 3)) as typeof FALLBACK;
+  const items = (posts ?? []).slice(0, 3);
 
   return (
     <section
@@ -62,11 +56,6 @@ export default function JournalSection({ posts }: Props) {
               <p style={{ fontSize: 13, color: "rgba(255,255,255,0.5)", lineHeight: 1.7, fontWeight: 300 }}>
                 {post.excerpt}
               </p>
-              {post.tag && (
-                <span style={{ display: "inline-block", marginTop: 16, border: "1px solid rgba(232,184,75,0.3)", color: "#F5D98A", padding: "3px 10px", borderRadius: 100, fontSize: 11 }}>
-                  {post.tag}
-                </span>
-              )}
             </a>
           ))}
         </div>
