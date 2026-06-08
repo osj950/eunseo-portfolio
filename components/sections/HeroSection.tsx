@@ -117,10 +117,10 @@ export default function HeroSection() {
         {/* 태그 */}
         <div className="anim-fade-5" style={{ display: "flex", flexWrap: "wrap", gap: 10, marginBottom: 44 }}>
           {[
-            { label: "🌱 청소년 교사", red: false },
+            { label: "🌱 대안학교 교사", red: false },
             { label: "📖 대학원생", red: false },
             { label: "🌐 웹 제작", red: false },
-            { label: "✍️ 번역", red: false },
+            { label: "📱 어플 제작", red: false },
             { label: "🎬 영상", red: false },
             { label: "🧵 프랑스자수", red: true },
           ].map(({ label, red }) => (
