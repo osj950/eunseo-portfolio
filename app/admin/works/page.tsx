@@ -86,12 +86,10 @@ export default function AdminWorksPage() {
               {editing ? "작업물 수정" : "새 작업물"}
             </h2>
             {[
-              { name: "title",     label: "제목 *",                required: true },
-              { name: "url",       label: "사이트 URL (홈페이지·앱 스토어 링크)" },
-              { name: "thumbnail", label: "썸네일 URL" },
-              { name: "images",    label: "이미지 URL (쉼표 구분)" },
-              { name: "tags",      label: "태그 (쉼표 구분)" },
-              { name: "year",      label: "연도" },
+              { name: "title", label: "제목 *", required: true },
+              { name: "url",   label: "사이트 URL (홈페이지·앱 스토어 링크)" },
+              { name: "tags",  label: "태그 (쉼표 구분)" },
+              { name: "year",  label: "연도" },
             ].map(({ name, label, required }) => (
               <div key={name}>
                 <label style={{ fontSize: 11, color: "#C4956A", letterSpacing: "0.12em", textTransform: "uppercase", fontWeight: 500, display: "block", marginBottom: 6 }}>{label}</label>
@@ -104,6 +102,47 @@ export default function AdminWorksPage() {
                 />
               </div>
             ))}
+
+            {/* 썸네일 — 자동 생성 버튼 포함 */}
+            <div>
+              <label style={{ fontSize: 11, color: "#C4956A", letterSpacing: "0.12em", textTransform: "uppercase", fontWeight: 500, display: "block", marginBottom: 6 }}>썸네일</label>
+              <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+                <input
+                  name="thumbnail"
+                  value={form.thumbnail}
+                  onChange={(e) => setForm((p) => ({ ...p, thumbnail: e.target.value }))}
+                  placeholder="URL 입력 또는 아래 버튼으로 자동 생성"
+                  style={{ ...inputStyle, flex: 1 }}
+                  onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#6B4226")}
+                  onBlur={(e) => (e.currentTarget.style.borderBottomColor = "rgba(107,66,38,0.3)")}
+                />
+                {form.url && (
+                  <button
+                    type="button"
+                    onClick={() => setForm((p) => ({ ...p, thumbnail: `https://s0.wp.com/mshots/v1/${encodeURIComponent(form.url)}?w=1200` }))}
+                    style={{ whiteSpace: "nowrap", fontSize: 12, color: "#6B4226", background: "#F2E8DC", border: "1px solid rgba(107,66,38,0.2)", borderRadius: 100, padding: "6px 12px", cursor: "pointer" }}
+                  >
+                    🖼 자동 생성
+                  </button>
+                )}
+              </div>
+              {form.thumbnail && (
+                <div style={{ marginTop: 10, borderRadius: 8, overflow: "hidden", border: "1px solid rgba(107,66,38,0.1)", maxHeight: 140 }}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={form.thumbnail} alt="썸네일 미리보기" style={{ width: "100%", objectFit: "cover", display: "block" }} />
+                </div>
+              )}
+            </div>
+
+            <div>
+              <label style={{ fontSize: 11, color: "#C4956A", letterSpacing: "0.12em", textTransform: "uppercase", fontWeight: 500, display: "block", marginBottom: 6 }}>이미지 URL (쉼표 구분)</label>
+              <input
+                name="images" value={form.images} onChange={(e) => setForm((p) => ({ ...p, images: e.target.value }))}
+                style={inputStyle}
+                onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#6B4226")}
+                onBlur={(e) => (e.currentTarget.style.borderBottomColor = "rgba(107,66,38,0.3)")}
+              />
+            </div>
             <div>
               <label style={{ fontSize: 11, color: "#C4956A", letterSpacing: "0.12em", textTransform: "uppercase", fontWeight: 500, display: "block", marginBottom: 6 }}>카테고리</label>
               <select
