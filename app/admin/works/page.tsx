@@ -15,6 +15,26 @@ export default function AdminWorksPage() {
   const [form, setForm] = useState(emptyForm);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [thumbLoading, setThumbLoading] = useState(false);
+
+  const autoThumbnail = async () => {
+    if (!form.url) return;
+    setThumbLoading(true);
+    try {
+      const res = await fetch(`/api/og-image?url=${encodeURIComponent(form.url)}`);
+      const data = await res.json();
+      if (data.url) {
+        setForm((p) => ({ ...p, thumbnail: data.url }));
+      } else {
+        // OG 이미지 없으면 mshots 사용
+        setForm((p) => ({ ...p, thumbnail: `https://image.thum.io/get/width/1200/${form.url.startsWith("http") ? form.url : `https://${form.url}`}` }));
+      }
+    } catch {
+      setForm((p) => ({ ...p, thumbnail: `https://image.thum.io/get/width/1200/${form.url.startsWith("http") ? form.url : `https://${form.url}`}` }));
+    } finally {
+      setThumbLoading(false);
+    }
+  };
 
   const fetchWorks = () => {
     setLoading(true);
@@ -119,10 +139,11 @@ export default function AdminWorksPage() {
                 {form.url && (
                   <button
                     type="button"
-                    onClick={() => setForm((p) => ({ ...p, thumbnail: `https://s0.wp.com/mshots/v1/${encodeURIComponent(form.url)}?w=1200` }))}
-                    style={{ whiteSpace: "nowrap", fontSize: 12, color: "#6B4226", background: "#F2E8DC", border: "1px solid rgba(107,66,38,0.2)", borderRadius: 100, padding: "6px 12px", cursor: "pointer" }}
+                    onClick={autoThumbnail}
+                    disabled={thumbLoading}
+                    style={{ whiteSpace: "nowrap", fontSize: 12, color: "#6B4226", background: "#F2E8DC", border: "1px solid rgba(107,66,38,0.2)", borderRadius: 100, padding: "6px 12px", cursor: "pointer", opacity: thumbLoading ? 0.6 : 1 }}
                   >
-                    🖼 자동 생성
+                    {thumbLoading ? "가져오는 중..." : "🖼 자동 생성"}
                   </button>
                 )}
               </div>
