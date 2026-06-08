@@ -1,16 +1,24 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { WebsiteProject } from "@/lib/types";
+import { Work, WebsiteProject, WORK_CATEGORIES } from "@/lib/types";
 
 type ThumbVariant = "yellow" | "brown" | "red" | "dark";
-type WorkCat = "all" | "web" | "app" | "video" | "embroidery";
+type WorkCat = "all" | "web" | "app" | "video" | "embroidery" | "other";
 
 const THUMB_BG: Record<ThumbVariant, string> = {
   yellow: "linear-gradient(135deg, #FDF3DC, #F5D98A)",
   brown:  "linear-gradient(135deg, #F2E8DC, #d4a882)",
   red:    "linear-gradient(135deg, rgba(192,57,43,0.08), rgba(192,57,43,0.18))",
   dark:   "linear-gradient(135deg, #2C1810, #4A2A1A)",
+};
+
+const CATEGORY_STYLE: Record<string, { thumb: ThumbVariant; icon: string; label: string }> = {
+  web:        { thumb: "yellow", icon: "🌐", label: "홈페이지" },
+  app:        { thumb: "red",    icon: "📱", label: "앱" },
+  video:      { thumb: "dark",   icon: "🎬", label: "영상" },
+  embroidery: { thumb: "brown",  icon: "🧵", label: "자수" },
+  other:      { thumb: "brown",  icon: "✨", label: "기타" },
 };
 
 const NON_WEB_CATEGORY_WORKS = [
@@ -32,20 +40,6 @@ const NON_WEB_CATEGORY_WORKS = [
   },
 ];
 
-const ALL_WORKS = [
-  { cat: "web" as WorkCat,        thumb: "yellow" as ThumbVariant, icon: "🌱", tag: "홈페이지", title: "거침없는 우다다학교",   comingSoon: false },
-  { cat: "web" as WorkCat,        thumb: "brown"  as ThumbVariant, icon: "🌿", tag: "홈페이지", title: "한국타말파연구소",       comingSoon: false },
-  { cat: "video" as WorkCat,      thumb: "dark"   as ThumbVariant, icon: "🎬", tag: "영상",    title: "교육 소개 영상",         comingSoon: true },
-  { cat: "embroidery" as WorkCat, thumb: "brown"  as ThumbVariant, icon: "🧵", tag: "자수",    title: "프랑스자수 작품 01",     comingSoon: true },
-];
-
-const FILTER_TABS: { value: WorkCat; label: string }[] = [
-  { value: "all",        label: "전체" },
-  { value: "web",        label: "🌐 홈페이지" },
-  { value: "app",        label: "📱 앱" },
-  { value: "video",      label: "🎬 영상" },
-  { value: "embroidery", label: "🧵 자수" },
-];
 
 const FALLBACK_PROJECTS: WebsiteProject[] = [
   { id: "f1", name: "거침없는 우다다학교", description: "Next.js + Google Sheets 연동. 게시판, 후원 신청, 갤러리 포함.", url: "https://udada-school.vercel.app", thumbnail: "", createdAt: "" },
@@ -55,6 +49,7 @@ export default function WorkSection() {
   const [open, setOpen] = useState(false);
   const [filter, setFilter] = useState<WorkCat>("all");
 
+  const [works, setWorks] = useState<Work[]>([]);
   const [webProjects, setWebProjects] = useState<WebsiteProject[]>([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [slideIdx, setSlideIdx] = useState(0);
@@ -63,6 +58,10 @@ export default function WorkSection() {
     fetch("/api/websites")
       .then((r) => r.json())
       .then((data) => { if (Array.isArray(data) && data.length > 0) setWebProjects(data); })
+      .catch(() => {});
+    fetch("/api/works")
+      .then((r) => r.json())
+      .then((data) => { if (Array.isArray(data)) setWorks(data); })
       .catch(() => {});
   }, []);
 
@@ -89,7 +88,10 @@ export default function WorkSection() {
     };
   }, [modalOpen, prev, next, closeModal]);
 
-  const filtered = filter === "all" ? ALL_WORKS : ALL_WORKS.filter((w) => w.cat === filter);
+  const filtered = filter === "all" ? works : works.filter((w) => w.category === filter);
+  const activeCats = WORK_CATEGORIES.filter((c) =>
+    c.value === "all" || works.some((w) => w.category === c.value)
+  );
 
   return (
     <section id="work" className="r-section" style={{ padding: "96px 60px", background: "#FBF7F0" }}>
@@ -244,42 +246,49 @@ export default function WorkSection() {
         {/* 전체 작업물 토글 */}
         {open && (
           <div id="workAll" style={{ background: "white", borderRadius: 20, marginTop: 32, padding: 36, border: "1px solid rgba(107,66,38,0.08)" }}>
-            <div style={{ display: "flex", gap: 10, marginBottom: 32, flexWrap: "wrap" }}>
-              {FILTER_TABS.map(({ value, label }) => (
-                <button
-                  key={value}
-                  onClick={() => setFilter(value)}
-                  style={{ background: filter === value ? "#6B4226" : "#F2E8DC", border: `1px solid ${filter === value ? "#6B4226" : "rgba(107,66,38,0.15)"}`, color: filter === value ? "#FDF3DC" : "#6B4226", padding: "7px 18px", borderRadius: 100, fontSize: 12, fontWeight: 500, cursor: "pointer", transition: "all 0.2s" }}
-                  onMouseEnter={(e) => { if (filter !== value) { (e.currentTarget as HTMLButtonElement).style.background = "#6B4226"; (e.currentTarget as HTMLButtonElement).style.color = "#FDF3DC"; } }}
-                  onMouseLeave={(e) => { if (filter !== value) { (e.currentTarget as HTMLButtonElement).style.background = "#F2E8DC"; (e.currentTarget as HTMLButtonElement).style.color = "#6B4226"; } }}
-                >
-                  {label}
-                </button>
-              ))}
-            </div>
-            <div className="all-work-grid">
-              {filtered.map((item, i) => (
-                <div
-                  key={i}
-                  style={{ border: "1px solid rgba(107,66,38,0.08)", borderRadius: 14, overflow: "hidden", transition: "transform 0.2s", opacity: item.comingSoon ? 0.55 : 1 }}
-                  onMouseEnter={(e) => { if (!item.comingSoon) e.currentTarget.style.transform = "translateY(-4px)"; }}
-                  onMouseLeave={(e) => (e.currentTarget.style.transform = "translateY(0)")}
-                >
-                  <div style={{ aspectRatio: "16/9", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 36, background: THUMB_BG[item.thumb], position: "relative" }}>
-                    {item.icon}
-                    {item.comingSoon && (
-                      <span style={{ position: "absolute", top: 10, right: 10, background: "rgba(44,24,16,0.55)", color: "rgba(255,255,255,0.8)", fontSize: 10, fontWeight: 500, padding: "3px 9px", borderRadius: 100, letterSpacing: "0.06em" }}>
-                        준비 중
-                      </span>
-                    )}
-                  </div>
-                  <div style={{ padding: 16 }}>
-                    <div style={{ fontSize: 10, color: "#C4956A", fontWeight: 500, letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: 6 }}>{item.tag}</div>
-                    <h4 style={{ fontFamily: "var(--font-nanum-myeongjo)", fontSize: 14, fontWeight: 700, color: "#2C1810" }}>{item.title}</h4>
-                  </div>
-                </div>
-              ))}
-            </div>
+            {works.length > 0 && (
+              <div style={{ display: "flex", gap: 10, marginBottom: 32, flexWrap: "wrap" }}>
+                {activeCats.map(({ value, label, icon }) => (
+                  <button
+                    key={value}
+                    onClick={() => setFilter(value as WorkCat)}
+                    style={{ background: filter === value ? "#6B4226" : "#F2E8DC", border: `1px solid ${filter === value ? "#6B4226" : "rgba(107,66,38,0.15)"}`, color: filter === value ? "#FDF3DC" : "#6B4226", padding: "7px 18px", borderRadius: 100, fontSize: 12, fontWeight: 500, cursor: "pointer", transition: "all 0.2s" }}
+                    onMouseEnter={(e) => { if (filter !== value) { (e.currentTarget as HTMLButtonElement).style.background = "#6B4226"; (e.currentTarget as HTMLButtonElement).style.color = "#FDF3DC"; } }}
+                    onMouseLeave={(e) => { if (filter !== value) { (e.currentTarget as HTMLButtonElement).style.background = "#F2E8DC"; (e.currentTarget as HTMLButtonElement).style.color = "#6B4226"; } }}
+                  >
+                    {icon && `${icon} `}{label}
+                  </button>
+                ))}
+              </div>
+            )}
+            {filtered.length === 0 ? (
+              <p style={{ fontSize: 14, color: "#C4956A", textAlign: "center", padding: "32px 0" }}>아직 작업물이 없습니다.</p>
+            ) : (
+              <div className="all-work-grid">
+                {filtered.map((item) => {
+                  const style = CATEGORY_STYLE[item.category] ?? CATEGORY_STYLE.other;
+                  return (
+                    <div
+                      key={item.id}
+                      style={{ border: "1px solid rgba(107,66,38,0.08)", borderRadius: 14, overflow: "hidden", transition: "transform 0.2s" }}
+                      onMouseEnter={(e) => (e.currentTarget.style.transform = "translateY(-4px)")}
+                      onMouseLeave={(e) => (e.currentTarget.style.transform = "translateY(0)")}
+                    >
+                      <div style={{ aspectRatio: "16/9", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 36, background: THUMB_BG[style.thumb], overflow: "hidden" }}>
+                        {item.thumbnail
+                          ? <img src={item.thumbnail} alt={item.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
+                          : style.icon}
+                      </div>
+                      <div style={{ padding: 16 }}>
+                        <div style={{ fontSize: 10, color: "#C4956A", fontWeight: 500, letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: 6 }}>{style.label}</div>
+                        <h4 style={{ fontFamily: "var(--font-nanum-myeongjo)", fontSize: 14, fontWeight: 700, color: "#2C1810", marginBottom: 6 }}>{item.title}</h4>
+                        {item.description && <p style={{ fontSize: 12, color: "#7A5C4A", lineHeight: 1.6, fontWeight: 300 }}>{item.description}</p>}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
         )}
       </div>

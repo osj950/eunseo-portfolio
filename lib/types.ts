@@ -1,4 +1,4 @@
-export type WorkCategory = "branding" | "editorial" | "digital" | "illustration" | "other";
+export type WorkCategory = "web" | "app" | "video" | "embroidery" | "other";
 
 export interface Work {
   id: string;
@@ -41,11 +41,11 @@ export interface WebsiteProject {
   createdAt: string;
 }
 
-export const WORK_CATEGORIES: { value: WorkCategory | "all"; label: string }[] = [
-  { value: "all", label: "전체" },
-  { value: "branding", label: "브랜딩" },
-  { value: "editorial", label: "에디토리얼" },
-  { value: "digital", label: "디지털" },
-  { value: "illustration", label: "일러스트" },
-  { value: "other", label: "기타" },
+export const WORK_CATEGORIES: { value: WorkCategory | "all"; label: string; icon: string }[] = [
+  { value: "all",        label: "전체",     icon: "" },
+  { value: "web",        label: "홈페이지", icon: "🌐" },
+  { value: "app",        label: "앱",       icon: "📱" },
+  { value: "video",      label: "영상",     icon: "🎬" },
+  { value: "embroidery", label: "자수",     icon: "🧵" },
+  { value: "other",      label: "기타",     icon: "✨" },
 ];
