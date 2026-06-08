@@ -19,6 +19,7 @@ export default function AdminJournalFormPage() {
     date: new Date().toISOString().split("T")[0],
   });
   const [saving, setSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (isNew) return;
@@ -37,14 +38,25 @@ export default function AdminJournalFormPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSaving(true);
+    setError(null);
     const url = isNew ? "/api/journal" : `/api/journal/${params.id}`;
-    await fetch(url, {
-      method: isNew ? "POST" : "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
-    });
-    setSaving(false);
-    router.push("/admin/journal");
+    try {
+      const res = await fetch(url, {
+        method: isNew ? "POST" : "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        setError(data.error ?? "저장에 실패했습니다. 다시 시도해주세요.");
+        return;
+      }
+      router.push("/admin/journal");
+    } catch {
+      setError("네트워크 오류가 발생했습니다. 다시 시도해주세요.");
+    } finally {
+      setSaving(false);
+    }
   };
 
   const inputStyle: React.CSSProperties = {
@@ -134,6 +146,13 @@ export default function AdminJournalFormPage() {
             onChange={(html) => setForm((p) => ({ ...p, content: html }))}
           />
         </div>
+
+        {/* 에러 메시지 */}
+        {error && (
+          <p style={{ fontSize: 13, color: "#C0392B", background: "rgba(192,57,43,0.08)", padding: "10px 14px", borderRadius: 8, margin: 0 }}>
+            {error}
+          </p>
+        )}
 
         {/* 버튼 */}
         <div style={{ display: "flex", gap: 12 }}>

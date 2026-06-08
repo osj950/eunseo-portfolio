@@ -5,7 +5,8 @@ export async function GET() {
   try {
     const inquiries = await getInquiries();
     return NextResponse.json(inquiries);
-  } catch {
+  } catch (e) {
+    console.error("[contact GET]", e);
     return NextResponse.json([]);
   }
 }
@@ -19,7 +20,8 @@ export async function POST(req: NextRequest) {
     }
     await createInquiry({ name, email, subject: subject ?? "", message });
     return NextResponse.json({ success: true }, { status: 201 });
-  } catch {
+  } catch (e) {
+    console.error("[contact POST]", e);
     return NextResponse.json({ error: "Failed to submit inquiry" }, { status: 500 });
   }
 }

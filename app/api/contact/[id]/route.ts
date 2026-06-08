@@ -8,7 +8,8 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     const { status } = await req.json();
     await updateInquiryStatus(id, status as Inquiry["status"]);
     return NextResponse.json({ success: true });
-  } catch {
+  } catch (e) {
+    console.error("[contact PATCH]", e);
     return NextResponse.json({ error: "Failed to update inquiry" }, { status: 500 });
   }
 }

@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { WebsiteProject } from "@/lib/types";
 
 type ThumbVariant = "yellow" | "brown" | "red" | "dark";
-type WorkCat = "all" | "web" | "translate" | "video" | "embroidery";
+type WorkCat = "all" | "web" | "app" | "video" | "embroidery";
 
 const THUMB_BG: Record<ThumbVariant, string> = {
   yellow: "linear-gradient(135deg, #FDF3DC, #F5D98A)",
@@ -15,52 +15,34 @@ const THUMB_BG: Record<ThumbVariant, string> = {
 
 const NON_WEB_CATEGORY_WORKS = [
   {
-    cat: "translate" as WorkCat,
+    cat: "app" as WorkCat,
     thumbVariant: "red" as ThumbVariant,
-    thumbIcon: "✍️",
-    eyebrow: "Translation",
-    title: "번역",
-    desc: "테스트",
+    thumbIcon: "📱",
+    eyebrow: "App Development",
+    title: "앱 제작",
+    desc: "사용하기 쉽고 직관적인 모바일 앱을 만들어 드려요.",
     href: "#contact",
     linkLabel: "문의하기 →",
-    features: ["테스트1", "테스트2", "테스트3", "테스트4"],
-  },
-  {
-    cat: "video" as WorkCat,
-    thumbVariant: "dark" as ThumbVariant,
-    thumbIcon: "🎬",
-    eyebrow: "Video Production",
-    title: "영상 제작",
-    desc: "테스트",
-    href: "#contact",
-    linkLabel: "문의하기 →",
-    features: ["테스트1", "테스트2", "테스트3", "테스트4"],
-  },
-  {
-    cat: "embroidery" as WorkCat,
-    thumbVariant: "brown" as ThumbVariant,
-    thumbIcon: "🧵",
-    eyebrow: "French Embroidery",
-    title: "프랑스자수",
-    desc: "테스트",
-    href: "#",
-    linkLabel: "더 보기 →",
-    features: ["테스트1", "테스트2", "테스트3", "테스트4"],
+    features: [
+      "React Native / Expo 기반 앱",
+      "Google Sheets / Supabase 연동",
+      "관리자 페이지",
+      "iOS · Android 동시 지원",
+    ],
   },
 ];
 
 const ALL_WORKS = [
-  { cat: "web" as WorkCat,        thumb: "yellow" as ThumbVariant, icon: "🌱", tag: "홈페이지", title: "거침없는 우다다학교" },
-  { cat: "web" as WorkCat,        thumb: "brown"  as ThumbVariant, icon: "🌿", tag: "홈페이지", title: "한국타말파연구소" },
-  { cat: "translate" as WorkCat,  thumb: "red"    as ThumbVariant, icon: "✍️", tag: "번역",    title: "표현예술치료 강의 번역" },
-  { cat: "video" as WorkCat,      thumb: "dark"   as ThumbVariant, icon: "🎬", tag: "영상",    title: "교육 소개 영상" },
-  { cat: "embroidery" as WorkCat, thumb: "brown"  as ThumbVariant, icon: "🧵", tag: "자수",    title: "프랑스자수 작품 01" },
+  { cat: "web" as WorkCat,        thumb: "yellow" as ThumbVariant, icon: "🌱", tag: "홈페이지", title: "거침없는 우다다학교",   comingSoon: false },
+  { cat: "web" as WorkCat,        thumb: "brown"  as ThumbVariant, icon: "🌿", tag: "홈페이지", title: "한국타말파연구소",       comingSoon: false },
+  { cat: "video" as WorkCat,      thumb: "dark"   as ThumbVariant, icon: "🎬", tag: "영상",    title: "교육 소개 영상",         comingSoon: true },
+  { cat: "embroidery" as WorkCat, thumb: "brown"  as ThumbVariant, icon: "🧵", tag: "자수",    title: "프랑스자수 작품 01",     comingSoon: true },
 ];
 
 const FILTER_TABS: { value: WorkCat; label: string }[] = [
   { value: "all",        label: "전체" },
   { value: "web",        label: "🌐 홈페이지" },
-  { value: "translate",  label: "✍️ 번역" },
+  { value: "app",        label: "📱 앱" },
   { value: "video",      label: "🎬 영상" },
   { value: "embroidery", label: "🧵 자수" },
 ];
@@ -279,11 +261,18 @@ export default function WorkSection() {
               {filtered.map((item, i) => (
                 <div
                   key={i}
-                  style={{ border: "1px solid rgba(107,66,38,0.08)", borderRadius: 14, overflow: "hidden", transition: "transform 0.2s" }}
-                  onMouseEnter={(e) => (e.currentTarget.style.transform = "translateY(-4px)")}
+                  style={{ border: "1px solid rgba(107,66,38,0.08)", borderRadius: 14, overflow: "hidden", transition: "transform 0.2s", opacity: item.comingSoon ? 0.55 : 1 }}
+                  onMouseEnter={(e) => { if (!item.comingSoon) e.currentTarget.style.transform = "translateY(-4px)"; }}
                   onMouseLeave={(e) => (e.currentTarget.style.transform = "translateY(0)")}
                 >
-                  <div style={{ aspectRatio: "16/9", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 36, background: THUMB_BG[item.thumb] }}>{item.icon}</div>
+                  <div style={{ aspectRatio: "16/9", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 36, background: THUMB_BG[item.thumb], position: "relative" }}>
+                    {item.icon}
+                    {item.comingSoon && (
+                      <span style={{ position: "absolute", top: 10, right: 10, background: "rgba(44,24,16,0.55)", color: "rgba(255,255,255,0.8)", fontSize: 10, fontWeight: 500, padding: "3px 9px", borderRadius: 100, letterSpacing: "0.06em" }}>
+                        준비 중
+                      </span>
+                    )}
+                  </div>
                   <div style={{ padding: 16 }}>
                     <div style={{ fontSize: 10, color: "#C4956A", fontWeight: 500, letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: 6 }}>{item.tag}</div>
                     <h4 style={{ fontFamily: "var(--font-nanum-myeongjo)", fontSize: 14, fontWeight: 700, color: "#2C1810" }}>{item.title}</h4>

@@ -6,7 +6,7 @@ import JournalSection from "@/components/sections/JournalSection";
 import ContactSection from "@/components/sections/ContactSection";
 import { getJournalPosts } from "@/lib/google-sheets";
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
   const posts = await getJournalPosts().catch(() => []);

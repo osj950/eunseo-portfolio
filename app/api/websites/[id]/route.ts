@@ -7,7 +7,8 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     const body = await req.json();
     await updateWebsiteProject(id, body);
     return NextResponse.json({ success: true });
-  } catch {
+  } catch (e) {
+    console.error("[websites PATCH]", e);
     return NextResponse.json({ error: "Failed to update website project" }, { status: 500 });
   }
 }
@@ -17,7 +18,8 @@ export async function DELETE(_req: NextRequest, { params }: { params: Promise<{ 
     const { id } = await params;
     await deleteWebsiteProject(id);
     return NextResponse.json({ success: true });
-  } catch {
+  } catch (e) {
+    console.error("[websites DELETE]", e);
     return NextResponse.json({ error: "Failed to delete website project" }, { status: 500 });
   }
 }

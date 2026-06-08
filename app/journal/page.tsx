@@ -3,7 +3,7 @@ import SubFooter from "@/components/layout/SubFooter";
 import { getJournalPosts } from "@/lib/google-sheets";
 import Link from "next/link";
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
 
 const FALLBACK = [
   { id: "1", slug: "body-knows-first", title: "몸이 먼저 안다는 것",  excerpt: "SP를 공부하며 자꾸 생각하게 되는 것들. 언어보다 먼저 도착하는 감각에 대해.", date: "2026. 05", tag: "SP · 감각",    content: "", createdAt: "" },

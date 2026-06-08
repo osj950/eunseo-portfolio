@@ -12,6 +12,7 @@ export default function AdminWebsitesPage() {
   const [editing, setEditing] = useState<WebsiteProject | null>(null);
   const [form, setForm] = useState(emptyForm);
   const [saving, setSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const fetchProjects = () => {
     setLoading(true);
@@ -20,30 +21,41 @@ export default function AdminWebsitesPage() {
 
   useEffect(() => { fetchProjects(); }, []);
 
-  const openNew = () => { setEditing(null); setForm(emptyForm); setShowForm(true); };
+  const openNew = () => { setEditing(null); setForm(emptyForm); setError(null); setShowForm(true); };
   const openEdit = (p: WebsiteProject) => {
     setEditing(p);
     setForm({ name: p.name, description: p.description, url: p.url, thumbnail: p.thumbnail });
+    setError(null);
     setShowForm(true);
   };
 
   const handleDelete = async (id: string) => {
     if (!confirm("삭제하시겠습니까?")) return;
-    await fetch(`/api/websites/${id}`, { method: "DELETE" });
+    const res = await fetch(`/api/websites/${id}`, { method: "DELETE" });
+    if (!res.ok) alert("삭제에 실패했습니다. 다시 시도해주세요.");
     fetchProjects();
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSaving(true);
-    if (editing) {
-      await fetch(`/api/websites/${editing.id}`, { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify(form) });
-    } else {
-      await fetch("/api/websites", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(form) });
+    setError(null);
+    try {
+      const res = editing
+        ? await fetch(`/api/websites/${editing.id}`, { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify(form) })
+        : await fetch("/api/websites", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(form) });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        setError(data.error ?? "저장에 실패했습니다. 다시 시도해주세요.");
+        return;
+      }
+      setShowForm(false);
+      fetchProjects();
+    } catch {
+      setError("네트워크 오류가 발생했습니다. 다시 시도해주세요.");
+    } finally {
+      setSaving(false);
     }
-    setSaving(false);
-    setShowForm(false);
-    fetchProjects();
   };
 
   const inputStyle: React.CSSProperties = {
@@ -108,6 +120,13 @@ export default function AdminWebsitesPage() {
               </div>
             )}
 
+            {/* 에러 메시지 */}
+            {error && (
+              <p style={{ fontSize: 13, color: "#C0392B", background: "rgba(192,57,43,0.08)", padding: "10px 14px", borderRadius: 8, margin: 0 }}>
+                {error}
+              </p>
+            )}
+
             <div style={{ display: "flex", gap: 12 }}>
               <button type="submit" disabled={saving} style={{ background: "#C0392B", color: "white", padding: "11px 28px", borderRadius: 100, fontSize: 13, fontWeight: 500, border: "none", cursor: "pointer", opacity: saving ? 0.6 : 1 }}>
                 {saving ? "저장 중..." : "저장"}
@@ -130,7 +149,6 @@ export default function AdminWebsitesPage() {
             key={proj.id}
             style={{ display: "flex", alignItems: "center", gap: 16, padding: "16px 24px", borderBottom: i < projects.length - 1 ? "1px solid rgba(107,66,38,0.07)" : "none" }}
           >
-            {/* 썸네일 미리보기 */}
             <div style={{ width: 56, height: 36, borderRadius: 6, overflow: "hidden", flexShrink: 0, background: "linear-gradient(135deg, #FDF3DC, #F5D98A)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18 }}>
               {proj.thumbnail ? (
                 <img src={proj.thumbnail} alt={proj.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />

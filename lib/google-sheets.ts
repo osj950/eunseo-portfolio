@@ -18,13 +18,46 @@ function getSheets() {
 
 const SPREADSHEET_ID = process.env.GOOGLE_SPREADSHEET_ID!;
 
+// 실제 Google Sheets 탭 이름과 동기화
+const SHEET_JOURNAL  = "기록(Journal)";
+const SHEET_CONTACT  = "문의하기";
+const SHEET_WORKS    = "works";
+const SHEET_WEBSITES = "홈페이지제작";
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+async function ensureSheet(sheets: any, sheetName: string, headers?: string[]): Promise<void> {
+  const meta = await sheets.spreadsheets.get({ spreadsheetId: SPREADSHEET_ID });
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const exists = meta.data.sheets?.some((s: any) => s.properties?.title === sheetName);
+  if (!exists) {
+    await sheets.spreadsheets.batchUpdate({
+      spreadsheetId: SPREADSHEET_ID,
+      requestBody: { requests: [{ addSheet: { properties: { title: sheetName } } }] },
+    });
+  }
+  if (headers) {
+    const check = await sheets.spreadsheets.values.get({
+      spreadsheetId: SPREADSHEET_ID,
+      range: `${sheetName}!A1:A1`,
+    });
+    if (!check.data.values?.length) {
+      await sheets.spreadsheets.values.update({
+        spreadsheetId: SPREADSHEET_ID,
+        range: `${sheetName}!A1`,
+        valueInputOption: "RAW",
+        requestBody: { values: [headers] },
+      });
+    }
+  }
+}
+
 // ─── Journal ──────────────────────────────────────────────────────────────────
 
 export async function getJournalPosts(): Promise<JournalPost[]> {
   const sheets = getSheets();
   const res = await sheets.spreadsheets.values.get({
     spreadsheetId: SPREADSHEET_ID,
-    range: "journal!A2:G",
+    range: `${SHEET_JOURNAL}!A2:G`,
   });
   const rows = res.data.values ?? [];
   return rows.map((r) => ({
@@ -45,11 +78,12 @@ export async function getJournalPostBySlug(slug: string): Promise<JournalPost | 
 
 export async function createJournalPost(post: Omit<JournalPost, "id" | "createdAt">): Promise<void> {
   const sheets = getSheets();
+  await ensureSheet(sheets, SHEET_JOURNAL, ["id", "slug", "title", "content", "excerpt", "date", "createdAt"]);
   const id = Date.now().toString();
   const createdAt = new Date().toISOString();
   await sheets.spreadsheets.values.append({
     spreadsheetId: SPREADSHEET_ID,
-    range: "journal!A:G",
+    range: `${SHEET_JOURNAL}!A:G`,
     valueInputOption: "RAW",
     requestBody: {
       values: [[id, post.slug, post.title, post.content, post.excerpt, post.date, createdAt]],
@@ -66,7 +100,7 @@ export async function updateJournalPost(id: string, post: Partial<JournalPost>):
   const existing = posts[rowIndex];
   await sheets.spreadsheets.values.update({
     spreadsheetId: SPREADSHEET_ID,
-    range: `journal!A${row}:G${row}`,
+    range: `${SHEET_JOURNAL}!A${row}:G${row}`,
     valueInputOption: "RAW",
     requestBody: {
       values: [[
@@ -87,7 +121,7 @@ export async function deleteJournalPost(id: string): Promise<void> {
   const posts = await getJournalPosts();
   const rowIndex = posts.findIndex((p) => p.id === id);
   if (rowIndex === -1) throw new Error("Post not found");
-  const sheetId = await getSheetId(sheets, "journal");
+  const sheetId = await getSheetId(sheets, SHEET_JOURNAL);
   await sheets.spreadsheets.batchUpdate({
     spreadsheetId: SPREADSHEET_ID,
     requestBody: {
@@ -104,31 +138,36 @@ export async function deleteJournalPost(id: string): Promise<void> {
 
 export async function getWorks(): Promise<Work[]> {
   const sheets = getSheets();
-  const res = await sheets.spreadsheets.values.get({
-    spreadsheetId: SPREADSHEET_ID,
-    range: "works!A2:J",
-  });
-  const rows = res.data.values ?? [];
-  return rows.map((r) => ({
-    id: r[0] ?? "",
-    title: r[1] ?? "",
-    category: r[2] ?? "other",
-    description: r[3] ?? "",
-    thumbnail: r[4] ?? "",
-    images: r[5] ? r[5].split(",").map((s: string) => s.trim()) : [],
-    tags: r[6] ? r[6].split(",").map((s: string) => s.trim()) : [],
-    year: r[7] ?? "",
-    createdAt: r[8] ?? "",
-  }));
+  try {
+    const res = await sheets.spreadsheets.values.get({
+      spreadsheetId: SPREADSHEET_ID,
+      range: `${SHEET_WORKS}!A2:I`,
+    });
+    const rows = res.data.values ?? [];
+    return rows.map((r) => ({
+      id: r[0] ?? "",
+      title: r[1] ?? "",
+      category: r[2] ?? "other",
+      description: r[3] ?? "",
+      thumbnail: r[4] ?? "",
+      images: r[5] ? r[5].split(",").map((s: string) => s.trim()) : [],
+      tags: r[6] ? r[6].split(",").map((s: string) => s.trim()) : [],
+      year: r[7] ?? "",
+      createdAt: r[8] ?? "",
+    }));
+  } catch {
+    return [];
+  }
 }
 
 export async function createWork(work: Omit<Work, "id" | "createdAt">): Promise<void> {
   const sheets = getSheets();
+  await ensureSheet(sheets, SHEET_WORKS, ["id", "title", "category", "description", "thumbnail", "images", "tags", "year", "createdAt"]);
   const id = Date.now().toString();
   const createdAt = new Date().toISOString();
   await sheets.spreadsheets.values.append({
     spreadsheetId: SPREADSHEET_ID,
-    range: "works!A:I",
+    range: `${SHEET_WORKS}!A:I`,
     valueInputOption: "RAW",
     requestBody: {
       values: [[
@@ -148,7 +187,7 @@ export async function updateWork(id: string, work: Partial<Work>): Promise<void>
   const existing = works[rowIndex];
   await sheets.spreadsheets.values.update({
     spreadsheetId: SPREADSHEET_ID,
-    range: `works!A${row}:I${row}`,
+    range: `${SHEET_WORKS}!A${row}:I${row}`,
     valueInputOption: "RAW",
     requestBody: {
       values: [[
@@ -171,7 +210,7 @@ export async function deleteWork(id: string): Promise<void> {
   const works = await getWorks();
   const rowIndex = works.findIndex((w) => w.id === id);
   if (rowIndex === -1) throw new Error("Work not found");
-  const sheetId = await getSheetId(sheets, "works");
+  const sheetId = await getSheetId(sheets, SHEET_WORKS);
   await sheets.spreadsheets.batchUpdate({
     spreadsheetId: SPREADSHEET_ID,
     requestBody: {
@@ -190,7 +229,7 @@ export async function getInquiries(): Promise<Inquiry[]> {
   const sheets = getSheets();
   const res = await sheets.spreadsheets.values.get({
     spreadsheetId: SPREADSHEET_ID,
-    range: "contact!A2:G",
+    range: `${SHEET_CONTACT}!A2:G`,
   });
   const rows = res.data.values ?? [];
   return rows.map((r) => ({
@@ -206,11 +245,12 @@ export async function getInquiries(): Promise<Inquiry[]> {
 
 export async function createInquiry(inquiry: Omit<Inquiry, "id" | "createdAt" | "status">): Promise<void> {
   const sheets = getSheets();
+  await ensureSheet(sheets, SHEET_CONTACT, ["id", "name", "email", "subject", "message", "createdAt", "status"]);
   const id = Date.now().toString();
   const createdAt = new Date().toISOString();
   await sheets.spreadsheets.values.append({
     spreadsheetId: SPREADSHEET_ID,
-    range: "contact!A:G",
+    range: `${SHEET_CONTACT}!A:G`,
     valueInputOption: "RAW",
     requestBody: {
       values: [[id, inquiry.name, inquiry.email, inquiry.subject, inquiry.message, createdAt, "unread"]],
@@ -226,7 +266,7 @@ export async function updateInquiryStatus(id: string, status: Inquiry["status"])
   const row = rowIndex + 2;
   await sheets.spreadsheets.values.update({
     spreadsheetId: SPREADSHEET_ID,
-    range: `contact!G${row}`,
+    range: `${SHEET_CONTACT}!G${row}`,
     valueInputOption: "RAW",
     requestBody: { values: [[status]] },
   });
@@ -238,7 +278,7 @@ export async function getWebsiteProjects(): Promise<WebsiteProject[]> {
   const sheets = getSheets();
   const res = await sheets.spreadsheets.values.get({
     spreadsheetId: SPREADSHEET_ID,
-    range: "홈페이지제작!A2:F",
+    range: `${SHEET_WEBSITES}!A2:F`,
   });
   const rows = res.data.values ?? [];
   return rows.map((r) => ({
@@ -257,7 +297,7 @@ export async function createWebsiteProject(project: Omit<WebsiteProject, "id" | 
   const createdAt = new Date().toISOString();
   await sheets.spreadsheets.values.append({
     spreadsheetId: SPREADSHEET_ID,
-    range: "홈페이지제작!A:F",
+    range: `${SHEET_WEBSITES}!A:F`,
     valueInputOption: "RAW",
     requestBody: {
       values: [[id, project.name, project.description, project.url, project.thumbnail, createdAt]],
@@ -274,7 +314,7 @@ export async function updateWebsiteProject(id: string, project: Partial<WebsiteP
   const existing = projects[rowIndex];
   await sheets.spreadsheets.values.update({
     spreadsheetId: SPREADSHEET_ID,
-    range: `홈페이지제작!A${row}:F${row}`,
+    range: `${SHEET_WEBSITES}!A${row}:F${row}`,
     valueInputOption: "RAW",
     requestBody: {
       values: [[
@@ -294,7 +334,7 @@ export async function deleteWebsiteProject(id: string): Promise<void> {
   const projects = await getWebsiteProjects();
   const rowIndex = projects.findIndex((p) => p.id === id);
   if (rowIndex === -1) throw new Error("Project not found");
-  const sheetId = await getSheetId(sheets, "홈페이지제작");
+  const sheetId = await getSheetId(sheets, SHEET_WEBSITES);
   await sheets.spreadsheets.batchUpdate({
     spreadsheetId: SPREADSHEET_ID,
     requestBody: {
