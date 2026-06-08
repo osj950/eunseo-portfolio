@@ -49,11 +49,13 @@ export default function ContactSection() {
 
           {[
             { label: "💬 카카오톡", href: "#" },
-            { label: "📷 인스타그램", href: "#" },
+            { label: "📷 인스타그램", href: "https://www.instagram.com/eun.maker/" },
           ].map(({ label, href }) => (
             <a
               key={label}
               href={href}
+              target={href !== "#" ? "_blank" : undefined}
+              rel={href !== "#" ? "noopener noreferrer" : undefined}
               style={{
                 display: "flex",
                 alignItems: "center",
