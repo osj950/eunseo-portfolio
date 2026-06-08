@@ -16,11 +16,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   if (pathname === "/admin/login") return <>{children}</>;
 
   return (
-    <div style={{ minHeight: "100vh", display: "flex", background: "#FBF7F0" }}>
+    <div style={{ minHeight: "100vh", display: "flex", background: "#f5e6ed" }}>
       {/* 사이드바 */}
-      <aside style={{ width: 220, flexShrink: 0, background: "#2C1810", display: "flex", flexDirection: "column" }}>
+      <aside style={{ width: 220, flexShrink: 0, background: "#2d1a35", display: "flex", flexDirection: "column" }}>
         <div style={{ padding: "28px 24px 20px", borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
-          <Link href="/" style={{ textDecoration: "none", fontFamily: "var(--font-playfair-display)", fontSize: 16, color: "#F5D98A", display: "block" }}>
+          <Link href="/" style={{ textDecoration: "none", fontFamily: "var(--font-playfair-display)", fontSize: 16, color: "#f0aece", display: "block" }}>
             Eunseo Ok
           </Link>
           <span style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", letterSpacing: "0.12em", textTransform: "uppercase", marginTop: 4, display: "block" }}>
@@ -39,8 +39,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                   display: "flex", alignItems: "center", gap: 10,
                   padding: "10px 12px", borderRadius: 8, marginBottom: 2,
                   fontSize: 13, textDecoration: "none",
-                  background: active ? "rgba(232,184,75,0.12)" : "transparent",
-                  color: active ? "#F5D98A" : "rgba(255,255,255,0.5)",
+                  background: active ? "rgba(217,112,154,0.12)" : "transparent",
+                  color: active ? "#f0aece" : "rgba(255,255,255,0.5)",
                   fontWeight: active ? 500 : 400,
                   transition: "background 0.15s, color 0.15s",
                 }}

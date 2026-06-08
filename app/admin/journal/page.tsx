@@ -27,41 +27,41 @@ export default function AdminJournalPage() {
         <div>
           <div
             className="eyebrow-line"
-            style={{ fontFamily: "var(--font-playfair-display)", fontStyle: "italic", fontSize: 12, letterSpacing: "0.15em", color: "#C4956A", marginBottom: 10 }}
+            style={{ fontFamily: "var(--font-playfair-display)", fontStyle: "italic", fontSize: 12, letterSpacing: "0.15em", color: "#c47a9a", marginBottom: 10 }}
           >
             관리
           </div>
-          <h1 style={{ fontFamily: "var(--font-nanum-myeongjo)", fontSize: 28, fontWeight: 800, color: "#2C1810" }}>기록 관리</h1>
+          <h1 style={{ fontFamily: "var(--font-nanum-myeongjo)", fontSize: 28, fontWeight: 800, color: "#2d1a35" }}>기록 관리</h1>
         </div>
         <Link
           href="/admin/journal/new"
-          style={{ background: "#6B4226", color: "#FDF3DC", padding: "11px 24px", borderRadius: 100, fontSize: 13, fontWeight: 500, textDecoration: "none" }}
+          style={{ background: "#7d3558", color: "#fce8f4", padding: "11px 24px", borderRadius: 100, fontSize: 13, fontWeight: 500, textDecoration: "none" }}
         >
           + 새 글 작성
         </Link>
       </div>
 
-      <div style={{ background: "white", borderRadius: 16, border: "1px solid rgba(107,66,38,0.08)", overflow: "hidden" }}>
+      <div style={{ background: "white", borderRadius: 16, border: "1px solid rgba(125,53,88,0.08)", overflow: "hidden" }}>
         {loading ? (
-          <div style={{ padding: 32, fontSize: 14, color: "#C4956A" }}>불러오는 중...</div>
+          <div style={{ padding: 32, fontSize: 14, color: "#c47a9a" }}>불러오는 중...</div>
         ) : posts.length === 0 ? (
-          <div style={{ padding: 32, fontSize: 14, color: "#C4956A" }}>기록이 없습니다.</div>
+          <div style={{ padding: 32, fontSize: 14, color: "#c47a9a" }}>기록이 없습니다.</div>
         ) : posts.map((post, i) => (
           <div
             key={post.id}
-            style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "18px 24px", borderBottom: i < posts.length - 1 ? "1px solid rgba(107,66,38,0.07)" : "none" }}
+            style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "18px 24px", borderBottom: i < posts.length - 1 ? "1px solid rgba(125,53,88,0.07)" : "none" }}
           >
             <div>
-              <div style={{ fontSize: 11, color: "#C4956A", marginBottom: 4, fontFamily: "var(--font-playfair-display)", fontStyle: "italic" }}>{post.date}</div>
-              <p style={{ fontFamily: "var(--font-nanum-myeongjo)", fontSize: 15, fontWeight: 700, color: "#2C1810" }}>{post.title}</p>
+              <div style={{ fontSize: 11, color: "#c47a9a", marginBottom: 4, fontFamily: "var(--font-playfair-display)", fontStyle: "italic" }}>{post.date}</div>
+              <p style={{ fontFamily: "var(--font-nanum-myeongjo)", fontSize: 15, fontWeight: 700, color: "#2d1a35" }}>{post.title}</p>
             </div>
             <div style={{ display: "flex", gap: 12 }}>
-              <Link href={`/admin/journal/${post.id}`} style={{ fontSize: 12, color: "#7A5C4A", textDecoration: "none", padding: "6px 14px", border: "1px solid rgba(107,66,38,0.2)", borderRadius: 100, transition: "all 0.15s" }}>
+              <Link href={`/admin/journal/${post.id}`} style={{ fontSize: 12, color: "#8a5278", textDecoration: "none", padding: "6px 14px", border: "1px solid rgba(125,53,88,0.2)", borderRadius: 100, transition: "all 0.15s" }}>
                 수정
               </Link>
               <button
                 onClick={() => handleDelete(post.id)}
-                style={{ fontSize: 12, color: "#C0392B", background: "none", border: "1px solid rgba(192,57,43,0.2)", borderRadius: 100, padding: "6px 14px", cursor: "pointer", transition: "all 0.15s" }}
+                style={{ fontSize: 12, color: "#c0395e", background: "none", border: "1px solid rgba(192,57,94,0.2)", borderRadius: 100, padding: "6px 14px", cursor: "pointer", transition: "all 0.15s" }}
               >
                 삭제
               </button>

@@ -19,17 +19,17 @@ export default function SubHeader() {
         position: "fixed", top: 0, left: 0, right: 0, zIndex: 100,
         display: "flex", alignItems: "center", justifyContent: "space-between",
         padding: "18px 60px",
-        background: "rgba(251,247,240,0.95)",
+        background: "rgba(245,230,237,0.95)",
         backdropFilter: "blur(10px)",
-        borderBottom: "1px solid rgba(107,66,38,0.1)",
+        borderBottom: "1px solid rgba(125,53,88,0.1)",
       }}
     >
       <Link
         href="/"
-        style={{ textDecoration: "none", fontFamily: "var(--font-playfair-display)", fontSize: 18, color: "#6B4226" }}
+        style={{ textDecoration: "none", fontFamily: "var(--font-playfair-display)", fontSize: 18, color: "#7d3558" }}
       >
         Eunseo Ok
-        <span style={{ display: "block", fontSize: 11, color: "#C4956A", letterSpacing: "0.1em" }}>옥은서</span>
+        <span style={{ display: "block", fontSize: 11, color: "#c47a9a", letterSpacing: "0.1em" }}>옥은서</span>
       </Link>
 
       <ul className="r-nav-links" style={{ display: "flex", gap: 32, listStyle: "none" }}>
@@ -43,7 +43,7 @@ export default function SubHeader() {
                 style={{
                   textDecoration: "none",
                   fontSize: 13,
-                  color: active ? "#6B4226" : "#7A5C4A",
+                  color: active ? "#7d3558" : "#8a5278",
                   fontWeight: active ? 500 : 400,
                   transition: "color 0.2s",
                 }}

@@ -21,15 +21,15 @@ export default function FloatingContactButton() {
         alignItems: "center",
         justifyContent: "center",
         gap: 0,
-        background: "#C0392B",
+        background: "#c0395e",
         color: "white",
         borderRadius: 100,
         width: hovered ? 136 : 52,
         height: 52,
         textDecoration: "none",
         boxShadow: hovered
-          ? "0 8px 28px rgba(192,57,43,0.5)"
-          : "0 4px 18px rgba(192,57,43,0.35)",
+          ? "0 8px 28px rgba(192,57,94,0.5)"
+          : "0 4px 18px rgba(192,57,94,0.35)",
         transform: hovered ? "scale(1.04)" : "scale(1)",
         transition: "width 0.25s ease, box-shadow 0.2s, transform 0.2s",
         overflow: "hidden",

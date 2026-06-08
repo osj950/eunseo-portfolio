@@ -35,26 +35,26 @@ export default async function JournalDetailPage({ params }: { params: Promise<{ 
         {/* 다크 헤더 */}
         <section
           className="r-section"
-          style={{ padding: "80px 60px 64px", background: "#2C1810", color: "white" }}
+          style={{ padding: "80px 60px 64px", background: "#2d1a35", color: "white" }}
         >
           <div style={{ maxWidth: 720, margin: "0 auto" }}>
             <Link
               href="/journal"
-              style={{ fontFamily: "var(--font-playfair-display)", fontStyle: "italic", fontSize: 12, color: "#E8B84B", letterSpacing: "0.1em", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 6, marginBottom: 32, transition: "opacity 0.2s" }}
+              style={{ fontFamily: "var(--font-playfair-display)", fontStyle: "italic", fontSize: 12, color: "#d9709a", letterSpacing: "0.1em", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 6, marginBottom: 32, transition: "opacity 0.2s" }}
             >
               ← 기록으로
             </Link>
             <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
-              <span style={{ fontFamily: "var(--font-playfair-display)", fontStyle: "italic", fontSize: 11, color: "#E8B84B", letterSpacing: "0.1em" }}>
+              <span style={{ fontFamily: "var(--font-playfair-display)", fontStyle: "italic", fontSize: 11, color: "#d9709a", letterSpacing: "0.1em" }}>
                 {date}
               </span>
               {tag && (
-                <span style={{ border: "1px solid rgba(232,184,75,0.3)", color: "#F5D98A", padding: "2px 10px", borderRadius: 100, fontSize: 11 }}>
+                <span style={{ border: "1px solid rgba(217,112,154,0.3)", color: "#f0aece", padding: "2px 10px", borderRadius: 100, fontSize: 11 }}>
                   {tag}
                 </span>
               )}
             </div>
-            <h1 style={{ fontFamily: "var(--font-nanum-myeongjo)", fontSize: "clamp(24px,4vw,40px)", fontWeight: 800, color: "#F5D98A", lineHeight: 1.35 }}>
+            <h1 style={{ fontFamily: "var(--font-nanum-myeongjo)", fontSize: "clamp(24px,4vw,40px)", fontWeight: 800, color: "#f0aece", lineHeight: 1.35 }}>
               {title}
             </h1>
           </div>
@@ -63,11 +63,11 @@ export default async function JournalDetailPage({ params }: { params: Promise<{ 
         {/* 본문 — flex: 1로 남은 공간 채워 푸터 하단 고정 */}
         <section
           className="r-section"
-          style={{ padding: "64px 60px 96px", background: "#FBF7F0", flex: 1 }}
+          style={{ padding: "64px 60px 96px", background: "#f5e6ed", flex: 1 }}
         >
           <div
             className="journal-content"
-            style={{ maxWidth: 720, margin: "0 auto", fontSize: 16, color: "#3D2314", lineHeight: 1.9, fontWeight: 300 }}
+            style={{ maxWidth: 720, margin: "0 auto", fontSize: 16, color: "#3d2040", lineHeight: 1.9, fontWeight: 300 }}
             dangerouslySetInnerHTML={{ __html: content }}
           />
         </section>

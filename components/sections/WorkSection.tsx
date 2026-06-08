@@ -7,10 +7,10 @@ type ThumbVariant = "yellow" | "brown" | "red" | "dark";
 type WorkCat = "all" | "web" | "app" | "video" | "embroidery" | "other";
 
 const THUMB_BG: Record<ThumbVariant, string> = {
-  yellow: "linear-gradient(135deg, #FDF3DC, #F5D98A)",
-  brown:  "linear-gradient(135deg, #F2E8DC, #d4a882)",
-  red:    "linear-gradient(135deg, rgba(192,57,43,0.08), rgba(192,57,43,0.18))",
-  dark:   "linear-gradient(135deg, #2C1810, #4A2A1A)",
+  yellow: "linear-gradient(135deg, #fce8f4, #f0aece)",
+  brown:  "linear-gradient(135deg, #edd6e4, #d4a0c0)",
+  red:    "linear-gradient(135deg, rgba(192,57,94,0.08), rgba(192,57,94,0.18))",
+  dark:   "linear-gradient(135deg, #2d1a35, #4a2045)",
 };
 
 const CATEGORY_STYLE: Record<string, { thumb: ThumbVariant; icon: string; label: string }> = {
@@ -86,19 +86,19 @@ export default function WorkSection() {
   );
 
   return (
-    <section id="work" className="r-section" style={{ padding: "96px 60px", background: "#FBF7F0" }}>
+    <section id="work" className="r-section" style={{ padding: "96px 60px", background: "#f5e6ed" }}>
       <div style={{ maxWidth: 1100, margin: "0 auto" }}>
 
         {/* 헤더 */}
         <div className="r-work-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 48 }}>
           <div>
-            <div className="eyebrow-line" style={{ fontFamily: "var(--font-playfair-display)", fontStyle: "italic", fontSize: 12, letterSpacing: "0.15em", color: "#C4956A", marginBottom: 14 }}>
+            <div className="eyebrow-line" style={{ fontFamily: "var(--font-playfair-display)", fontStyle: "italic", fontSize: 12, letterSpacing: "0.15em", color: "#c47a9a", marginBottom: 14 }}>
               포트폴리오
             </div>
-            <h2 style={{ fontFamily: "var(--font-nanum-myeongjo)", fontSize: "clamp(28px,4vw,44px)", fontWeight: 800, color: "#2C1810", lineHeight: 1.25, marginBottom: 12 }}>
+            <h2 style={{ fontFamily: "var(--font-nanum-myeongjo)", fontSize: "clamp(28px,4vw,44px)", fontWeight: 800, color: "#2d1a35", lineHeight: 1.25, marginBottom: 12 }}>
               만든 것들
             </h2>
-            <p style={{ fontSize: 15, color: "#7A5C4A", lineHeight: 1.85, maxWidth: 500, fontWeight: 300 }}>
+            <p style={{ fontSize: 15, color: "#8a5278", lineHeight: 1.85, maxWidth: 500, fontWeight: 300 }}>
               각 분야의 최신 작업물이에요. 전체 목록을 보려면 아래 버튼을 눌러주세요.
             </p>
           </div>
@@ -109,7 +109,7 @@ export default function WorkSection() {
               setOpen((v) => !v);
               if (!open) setTimeout(() => document.getElementById("workAll")?.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
             }}
-            style={{ fontSize: 13, color: "#6B4226", fontWeight: 500, textDecoration: "none", display: "flex", alignItems: "center", gap: 6, whiteSpace: "nowrap" }}
+            style={{ fontSize: 13, color: "#7d3558", fontWeight: 500, textDecoration: "none", display: "flex", alignItems: "center", gap: 6, whiteSpace: "nowrap" }}
           >
             {open ? "← 접기" : "전체 작업물 보기 →"}
           </a>
@@ -124,8 +124,8 @@ export default function WorkSection() {
             tabIndex={0}
             onClick={() => setModalOpen(true)}
             onKeyDown={(e) => e.key === "Enter" && setModalOpen(true)}
-            style={{ background: "white", borderRadius: 20, overflow: "hidden", border: "1px solid rgba(107,66,38,0.08)", transition: "transform 0.25s, box-shadow 0.25s", cursor: "pointer", display: "flex", flexDirection: "column" }}
-            onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-5px)"; e.currentTarget.style.boxShadow = "0 16px 40px rgba(107,66,38,0.1)"; }}
+            style={{ background: "white", borderRadius: 20, overflow: "hidden", border: "1px solid rgba(125,53,88,0.08)", transition: "transform 0.25s, box-shadow 0.25s", cursor: "pointer", display: "flex", flexDirection: "column" }}
+            onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-5px)"; e.currentTarget.style.boxShadow = "0 16px 40px rgba(125,53,88,0.1)"; }}
             onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "none"; }}
           >
             {/* 상단: 대표 이미지 */}
@@ -134,7 +134,7 @@ export default function WorkSection() {
                 <img src={webWorks[0].thumbnail} alt="홈페이지 제작" style={{ width: "100%", height: "100%", objectFit: "cover" }} onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
               ) : "🌱"}
               {total > 0 && (
-                <div style={{ position: "absolute", top: 14, right: 14, background: "rgba(44,24,16,0.6)", color: "#F5D98A", fontSize: 10, fontWeight: 500, padding: "4px 10px", borderRadius: 100, letterSpacing: "0.06em" }}>
+                <div style={{ position: "absolute", top: 14, right: 14, background: "rgba(45,26,53,0.6)", color: "#f0aece", fontSize: 10, fontWeight: 500, padding: "4px 10px", borderRadius: 100, letterSpacing: "0.06em" }}>
                   제작 사례 {total}개
                 </div>
               )}
@@ -142,20 +142,20 @@ export default function WorkSection() {
 
             {/* 중간: 제목 */}
             <div style={{ padding: "22px 24px 0" }}>
-              <div style={{ fontFamily: "var(--font-playfair-display)", fontStyle: "italic", fontSize: 11, color: "#E8B84B", letterSpacing: "0.12em", marginBottom: 8 }}>
+              <div style={{ fontFamily: "var(--font-playfair-display)", fontStyle: "italic", fontSize: 11, color: "#d9709a", letterSpacing: "0.12em", marginBottom: 8 }}>
                 Website Development
               </div>
-              <h3 style={{ fontFamily: "var(--font-nanum-myeongjo)", fontSize: 22, fontWeight: 800, color: "#2C1810", lineHeight: 1.3, marginBottom: 4 }}>
+              <h3 style={{ fontFamily: "var(--font-nanum-myeongjo)", fontSize: 22, fontWeight: 800, color: "#2d1a35", lineHeight: 1.3, marginBottom: 4 }}>
                 홈페이지 제작
               </h3>
-              <p style={{ fontSize: 12, color: "#7A5C4A", fontWeight: 300, lineHeight: 1.6, marginBottom: 18 }}>
+              <p style={{ fontSize: 12, color: "#8a5278", fontWeight: 300, lineHeight: 1.6, marginBottom: 18 }}>
                 Next.js 기반의 빠르고 관리하기 쉬운 홈페이지를 만들어 드려요.
               </p>
             </div>
 
             {/* 하단: 기능 목록 */}
             <div style={{ padding: "0 24px 24px", flex: 1 }}>
-              <div style={{ borderTop: "1px solid rgba(107,66,38,0.07)", paddingTop: 16, display: "flex", flexDirection: "column", gap: 9 }}>
+              <div style={{ borderTop: "1px solid rgba(125,53,88,0.07)", paddingTop: 16, display: "flex", flexDirection: "column", gap: 9 }}>
                 {[
                   "Next.js 기반 반응형 홈페이지",
                   "Google Sheets 연동 게시판",
@@ -163,22 +163,22 @@ export default function WorkSection() {
                   "Vercel 배포",
                 ].map((feat) => (
                   <div key={feat} style={{ display: "flex", alignItems: "center", gap: 9 }}>
-                    <span style={{ width: 18, height: 18, borderRadius: "50%", background: "rgba(232,184,75,0.2)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                    <span style={{ width: 18, height: 18, borderRadius: "50%", background: "rgba(217,112,154,0.2)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
                       <svg width="9" height="9" viewBox="0 0 10 8" fill="none">
-                        <path d="M1 4l3 3 5-6" stroke="#6B4226" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M1 4l3 3 5-6" stroke="#7d3558" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>
                     </span>
-                    <span style={{ fontSize: 12, color: "#3D2314", fontWeight: 400 }}>{feat}</span>
+                    <span style={{ fontSize: 12, color: "#3d2040", fontWeight: 400 }}>{feat}</span>
                   </div>
                 ))}
               </div>
 
               {/* 사례 보기 링크 */}
               <div style={{ marginTop: 20, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                <span style={{ fontSize: 12, color: "#6B4226", fontWeight: 500 }}>
+                <span style={{ fontSize: 12, color: "#7d3558", fontWeight: 500 }}>
                   제작 사례 보기 →
                 </span>
-                <span style={{ fontSize: 10, color: "rgba(107,66,38,0.4)", letterSpacing: "0.06em" }}>클릭</span>
+                <span style={{ fontSize: 10, color: "rgba(125,53,88,0.4)", letterSpacing: "0.06em" }}>클릭</span>
               </div>
             </div>
           </div>
@@ -188,8 +188,8 @@ export default function WorkSection() {
             <a
               key={item.cat}
               href={item.href}
-              style={{ background: "white", borderRadius: 20, overflow: "hidden", border: "1px solid rgba(107,66,38,0.08)", transition: "transform 0.25s, box-shadow 0.25s", display: "flex", flexDirection: "column", textDecoration: "none" }}
-              onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-5px)"; e.currentTarget.style.boxShadow = "0 16px 40px rgba(107,66,38,0.1)"; }}
+              style={{ background: "white", borderRadius: 20, overflow: "hidden", border: "1px solid rgba(125,53,88,0.08)", transition: "transform 0.25s, box-shadow 0.25s", display: "flex", flexDirection: "column", textDecoration: "none" }}
+              onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-5px)"; e.currentTarget.style.boxShadow = "0 16px 40px rgba(125,53,88,0.1)"; }}
               onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "none"; }}
             >
               {/* 상단: 대표 이미지 */}
@@ -199,35 +199,35 @@ export default function WorkSection() {
 
               {/* 중간: 제목 */}
               <div style={{ padding: "22px 24px 0" }}>
-                <div style={{ fontFamily: "var(--font-playfair-display)", fontStyle: "italic", fontSize: 11, color: "#E8B84B", letterSpacing: "0.12em", marginBottom: 8 }}>
+                <div style={{ fontFamily: "var(--font-playfair-display)", fontStyle: "italic", fontSize: 11, color: "#d9709a", letterSpacing: "0.12em", marginBottom: 8 }}>
                   {item.eyebrow}
                 </div>
-                <h3 style={{ fontFamily: "var(--font-nanum-myeongjo)", fontSize: 22, fontWeight: 800, color: "#2C1810", lineHeight: 1.3, marginBottom: 4 }}>
+                <h3 style={{ fontFamily: "var(--font-nanum-myeongjo)", fontSize: 22, fontWeight: 800, color: "#2d1a35", lineHeight: 1.3, marginBottom: 4 }}>
                   {item.title}
                 </h3>
-                <p style={{ fontSize: 12, color: "#7A5C4A", fontWeight: 300, lineHeight: 1.6, marginBottom: 18 }}>
+                <p style={{ fontSize: 12, color: "#8a5278", fontWeight: 300, lineHeight: 1.6, marginBottom: 18 }}>
                   {item.desc}
                 </p>
               </div>
 
               {/* 하단: 기능 목록 */}
               <div style={{ padding: "0 24px 24px", flex: 1 }}>
-                <div style={{ borderTop: "1px solid rgba(107,66,38,0.07)", paddingTop: 16, display: "flex", flexDirection: "column", gap: 9 }}>
+                <div style={{ borderTop: "1px solid rgba(125,53,88,0.07)", paddingTop: 16, display: "flex", flexDirection: "column", gap: 9 }}>
                   {item.features.map((feat) => (
                     <div key={feat} style={{ display: "flex", alignItems: "center", gap: 9 }}>
-                      <span style={{ width: 18, height: 18, borderRadius: "50%", background: "rgba(232,184,75,0.2)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                      <span style={{ width: 18, height: 18, borderRadius: "50%", background: "rgba(217,112,154,0.2)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
                         <svg width="9" height="9" viewBox="0 0 10 8" fill="none">
-                          <path d="M1 4l3 3 5-6" stroke="#6B4226" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+                          <path d="M1 4l3 3 5-6" stroke="#7d3558" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
                         </svg>
                       </span>
-                      <span style={{ fontSize: 12, color: "#3D2314", fontWeight: 400 }}>{feat}</span>
+                      <span style={{ fontSize: 12, color: "#3d2040", fontWeight: 400 }}>{feat}</span>
                     </div>
                   ))}
                 </div>
 
                 <div style={{ marginTop: 20, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                  <span style={{ fontSize: 12, color: "#6B4226", fontWeight: 500 }}>{item.linkLabel}</span>
-                  <span style={{ fontSize: 10, color: "rgba(107,66,38,0.4)", letterSpacing: "0.06em" }}>클릭</span>
+                  <span style={{ fontSize: 12, color: "#7d3558", fontWeight: 500 }}>{item.linkLabel}</span>
+                  <span style={{ fontSize: 10, color: "rgba(125,53,88,0.4)", letterSpacing: "0.06em" }}>클릭</span>
                 </div>
               </div>
             </a>
@@ -236,16 +236,16 @@ export default function WorkSection() {
 
         {/* 전체 작업물 토글 */}
         {open && (
-          <div id="workAll" style={{ background: "white", borderRadius: 20, marginTop: 32, padding: 36, border: "1px solid rgba(107,66,38,0.08)" }}>
+          <div id="workAll" style={{ background: "white", borderRadius: 20, marginTop: 32, padding: 36, border: "1px solid rgba(125,53,88,0.08)" }}>
             {works.length > 0 && (
               <div style={{ display: "flex", gap: 10, marginBottom: 32, flexWrap: "wrap" }}>
                 {activeCats.map(({ value, label, icon }) => (
                   <button
                     key={value}
                     onClick={() => setFilter(value as WorkCat)}
-                    style={{ background: filter === value ? "#6B4226" : "#F2E8DC", border: `1px solid ${filter === value ? "#6B4226" : "rgba(107,66,38,0.15)"}`, color: filter === value ? "#FDF3DC" : "#6B4226", padding: "7px 18px", borderRadius: 100, fontSize: 12, fontWeight: 500, cursor: "pointer", transition: "all 0.2s" }}
-                    onMouseEnter={(e) => { if (filter !== value) { (e.currentTarget as HTMLButtonElement).style.background = "#6B4226"; (e.currentTarget as HTMLButtonElement).style.color = "#FDF3DC"; } }}
-                    onMouseLeave={(e) => { if (filter !== value) { (e.currentTarget as HTMLButtonElement).style.background = "#F2E8DC"; (e.currentTarget as HTMLButtonElement).style.color = "#6B4226"; } }}
+                    style={{ background: filter === value ? "#7d3558" : "#edd6e4", border: `1px solid ${filter === value ? "#7d3558" : "rgba(125,53,88,0.15)"}`, color: filter === value ? "#fce8f4" : "#7d3558", padding: "7px 18px", borderRadius: 100, fontSize: 12, fontWeight: 500, cursor: "pointer", transition: "all 0.2s" }}
+                    onMouseEnter={(e) => { if (filter !== value) { (e.currentTarget as HTMLButtonElement).style.background = "#7d3558"; (e.currentTarget as HTMLButtonElement).style.color = "#fce8f4"; } }}
+                    onMouseLeave={(e) => { if (filter !== value) { (e.currentTarget as HTMLButtonElement).style.background = "#edd6e4"; (e.currentTarget as HTMLButtonElement).style.color = "#7d3558"; } }}
                   >
                     {icon && `${icon} `}{label}
                   </button>
@@ -253,7 +253,7 @@ export default function WorkSection() {
               </div>
             )}
             {filtered.length === 0 ? (
-              <p style={{ fontSize: 14, color: "#C4956A", textAlign: "center", padding: "32px 0" }}>아직 작업물이 없습니다.</p>
+              <p style={{ fontSize: 14, color: "#c47a9a", textAlign: "center", padding: "32px 0" }}>아직 작업물이 없습니다.</p>
             ) : (
               <div className="all-work-grid">
                 {filtered.map((item) => {
@@ -261,7 +261,7 @@ export default function WorkSection() {
                   return (
                     <div
                       key={item.id}
-                      style={{ border: "1px solid rgba(107,66,38,0.08)", borderRadius: 14, overflow: "hidden", transition: "transform 0.2s" }}
+                      style={{ border: "1px solid rgba(125,53,88,0.08)", borderRadius: 14, overflow: "hidden", transition: "transform 0.2s" }}
                       onMouseEnter={(e) => (e.currentTarget.style.transform = "translateY(-4px)")}
                       onMouseLeave={(e) => (e.currentTarget.style.transform = "translateY(0)")}
                     >
@@ -271,9 +271,9 @@ export default function WorkSection() {
                           : style.icon}
                       </div>
                       <div style={{ padding: 16 }}>
-                        <div style={{ fontSize: 10, color: "#C4956A", fontWeight: 500, letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: 6 }}>{style.label}</div>
-                        <h4 style={{ fontFamily: "var(--font-nanum-myeongjo)", fontSize: 14, fontWeight: 700, color: "#2C1810", marginBottom: 6 }}>{item.title}</h4>
-                        {item.description && <p style={{ fontSize: 12, color: "#7A5C4A", lineHeight: 1.6, fontWeight: 300 }}>{item.description}</p>}
+                        <div style={{ fontSize: 10, color: "#c47a9a", fontWeight: 500, letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: 6 }}>{style.label}</div>
+                        <h4 style={{ fontFamily: "var(--font-nanum-myeongjo)", fontSize: 14, fontWeight: 700, color: "#2d1a35", marginBottom: 6 }}>{item.title}</h4>
+                        {item.description && <p style={{ fontSize: 12, color: "#8a5278", lineHeight: 1.6, fontWeight: 300 }}>{item.description}</p>}
                       </div>
                     </div>
                   );
@@ -288,13 +288,13 @@ export default function WorkSection() {
       {modalOpen && (
         <div
           onClick={closeModal}
-          style={{ position: "fixed", inset: 0, background: "rgba(28,14,8,0.88)", zIndex: 1000, display: "flex", alignItems: "center", justifyContent: "center", padding: "24px 60px" }}
+          style={{ position: "fixed", inset: 0, background: "rgba(22,8,26,0.88)", zIndex: 1000, display: "flex", alignItems: "center", justifyContent: "center", padding: "24px 60px" }}
         >
           {/* 좌 화살표 */}
           {total > 1 && (
             <button
               onClick={(e) => { e.stopPropagation(); prev(); }}
-              style={{ position: "absolute", left: 24, top: "50%", transform: "translateY(-50%)", background: "#C0392B", border: "none", borderRadius: "50%", width: 48, height: 48, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontSize: 26, boxShadow: "0 4px 16px rgba(192,57,43,0.5)", zIndex: 2 }}
+              style={{ position: "absolute", left: 24, top: "50%", transform: "translateY(-50%)", background: "#c0395e", border: "none", borderRadius: "50%", width: 48, height: 48, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontSize: 26, boxShadow: "0 4px 16px rgba(192,57,94,0.5)", zIndex: 2 }}
             >
               ‹
             </button>
@@ -303,12 +303,12 @@ export default function WorkSection() {
           {/* 모달 카드 */}
           <div
             onClick={(e) => e.stopPropagation()}
-            style={{ background: "#FBF7F0", borderRadius: 24, maxWidth: 680, width: "100%", overflow: "hidden", position: "relative", boxShadow: "0 32px 80px rgba(0,0,0,0.4)" }}
+            style={{ background: "#f5e6ed", borderRadius: 24, maxWidth: 680, width: "100%", overflow: "hidden", position: "relative", boxShadow: "0 32px 80px rgba(0,0,0,0.4)" }}
           >
             {/* X 버튼 */}
             <button
               onClick={closeModal}
-              style={{ position: "absolute", top: 16, right: 16, background: "rgba(44,24,16,0.55)", border: "none", borderRadius: "50%", width: 36, height: 36, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontSize: 16, zIndex: 3, lineHeight: 1 }}
+              style={{ position: "absolute", top: 16, right: 16, background: "rgba(45,26,53,0.55)", border: "none", borderRadius: "50%", width: 36, height: 36, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontSize: 16, zIndex: 3, lineHeight: 1 }}
             >
               ✕
             </button>
@@ -326,7 +326,7 @@ export default function WorkSection() {
                 <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 72 }}>🌱</div>
               )}
               {total > 1 && (
-                <div style={{ position: "absolute", bottom: 14, right: 16, background: "rgba(44,24,16,0.6)", color: "white", fontSize: 11, fontWeight: 500, padding: "4px 12px", borderRadius: 100, letterSpacing: "0.05em" }}>
+                <div style={{ position: "absolute", bottom: 14, right: 16, background: "rgba(45,26,53,0.6)", color: "white", fontSize: 11, fontWeight: 500, padding: "4px 12px", borderRadius: 100, letterSpacing: "0.05em" }}>
                   {slideIdx + 1} / {total}
                 </div>
               )}
@@ -334,13 +334,13 @@ export default function WorkSection() {
 
             {/* 본문 */}
             <div style={{ padding: "28px 32px 32px" }}>
-              <div style={{ fontFamily: "var(--font-playfair-display)", fontStyle: "italic", fontSize: 11, color: "#E8B84B", letterSpacing: "0.12em", marginBottom: 10 }}>
+              <div style={{ fontFamily: "var(--font-playfair-display)", fontStyle: "italic", fontSize: 11, color: "#d9709a", letterSpacing: "0.12em", marginBottom: 10 }}>
                 홈페이지 제작
               </div>
-              <h2 style={{ fontFamily: "var(--font-nanum-myeongjo)", fontSize: "clamp(20px,3vw,26px)", fontWeight: 800, color: "#2C1810", lineHeight: 1.3, marginBottom: 12 }}>
+              <h2 style={{ fontFamily: "var(--font-nanum-myeongjo)", fontSize: "clamp(20px,3vw,26px)", fontWeight: 800, color: "#2d1a35", lineHeight: 1.3, marginBottom: 12 }}>
                 {current?.title}
               </h2>
-              <p style={{ fontSize: 14, color: "#7A5C4A", lineHeight: 1.8, fontWeight: 300, marginBottom: 24 }}>
+              <p style={{ fontSize: 14, color: "#8a5278", lineHeight: 1.8, fontWeight: 300, marginBottom: 24 }}>
                 {current?.description}
               </p>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 16 }}>
@@ -349,9 +349,9 @@ export default function WorkSection() {
                     href={current.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "#C0392B", color: "white", padding: "12px 28px", borderRadius: 100, fontSize: 13, fontWeight: 500, textDecoration: "none", transition: "background 0.2s, gap 0.2s" }}
-                    onMouseEnter={(e) => { e.currentTarget.style.background = "#a93226"; e.currentTarget.style.gap = "12px"; }}
-                    onMouseLeave={(e) => { e.currentTarget.style.background = "#C0392B"; e.currentTarget.style.gap = "8px"; }}
+                    style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "#c0395e", color: "white", padding: "12px 28px", borderRadius: 100, fontSize: 13, fontWeight: 500, textDecoration: "none", transition: "background 0.2s, gap 0.2s" }}
+                    onMouseEnter={(e) => { e.currentTarget.style.background = "#a93256"; e.currentTarget.style.gap = "12px"; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.background = "#c0395e"; e.currentTarget.style.gap = "8px"; }}
                   >
                     사이트 보기 →
                   </a>
@@ -362,7 +362,7 @@ export default function WorkSection() {
                       <button
                         key={i}
                         onClick={() => setSlideIdx(i)}
-                        style={{ width: i === slideIdx ? 20 : 8, height: 8, borderRadius: 4, padding: 0, background: i === slideIdx ? "#C0392B" : "rgba(107,66,38,0.2)", border: "none", cursor: "pointer", transition: "all 0.2s" }}
+                        style={{ width: i === slideIdx ? 20 : 8, height: 8, borderRadius: 4, padding: 0, background: i === slideIdx ? "#c0395e" : "rgba(125,53,88,0.2)", border: "none", cursor: "pointer", transition: "all 0.2s" }}
                       />
                     ))}
                   </div>
@@ -375,7 +375,7 @@ export default function WorkSection() {
           {total > 1 && (
             <button
               onClick={(e) => { e.stopPropagation(); next(); }}
-              style={{ position: "absolute", right: 24, top: "50%", transform: "translateY(-50%)", background: "#C0392B", border: "none", borderRadius: "50%", width: 48, height: 48, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontSize: 26, boxShadow: "0 4px 16px rgba(192,57,43,0.5)", zIndex: 2 }}
+              style={{ position: "absolute", right: 24, top: "50%", transform: "translateY(-50%)", background: "#c0395e", border: "none", borderRadius: "50%", width: 48, height: 48, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontSize: 26, boxShadow: "0 4px 16px rgba(192,57,94,0.5)", zIndex: 2 }}
             >
               ›
             </button>

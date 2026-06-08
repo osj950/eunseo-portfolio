@@ -5,12 +5,12 @@ export default function SubFooter() {
     <footer
       className="r-footer"
       style={{
-        background: "#2C1810", color: "rgba(255,255,255,0.4)",
+        background: "#2d1a35", color: "rgba(255,255,255,0.4)",
         padding: "32px 60px", fontSize: 12,
         display: "flex", justifyContent: "space-between", alignItems: "center",
       }}
     >
-      <span style={{ fontFamily: "var(--font-playfair-display)", color: "#F5D98A", fontSize: 14 }}>
+      <span style={{ fontFamily: "var(--font-playfair-display)", color: "#f0aece", fontSize: 14 }}>
         Eunseo Ok · 옥은서
       </span>
       <div style={{ display: "flex", gap: 24, alignItems: "center" }}>

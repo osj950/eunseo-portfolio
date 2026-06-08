@@ -13,17 +13,17 @@ export default function JournalSection({ posts }: Props) {
     <section
       id="journal"
       className="r-section"
-      style={{ padding: "96px 60px", background: "#2C1810", color: "white" }}
+      style={{ padding: "96px 60px", background: "#2d1a35", color: "white" }}
     >
       <div style={{ maxWidth: 1100, margin: "0 auto" }}>
         <div style={{ marginBottom: 48 }}>
           <div
             className="eyebrow-line"
-            style={{ fontFamily: "var(--font-playfair-display)", fontStyle: "italic", fontSize: 12, letterSpacing: "0.15em", color: "#E8B84B", marginBottom: 14 }}
+            style={{ fontFamily: "var(--font-playfair-display)", fontStyle: "italic", fontSize: 12, letterSpacing: "0.15em", color: "#d9709a", marginBottom: 14 }}
           >
             기록
           </div>
-          <h2 style={{ fontFamily: "var(--font-nanum-myeongjo)", fontSize: "clamp(28px,4vw,44px)", fontWeight: 800, color: "#F5D98A", lineHeight: 1.25, marginBottom: 12 }}>
+          <h2 style={{ fontFamily: "var(--font-nanum-myeongjo)", fontSize: "clamp(28px,4vw,44px)", fontWeight: 800, color: "#f0aece", lineHeight: 1.25, marginBottom: 12 }}>
             생각들
           </h2>
           <p style={{ fontSize: 15, color: "rgba(255,255,255,0.6)", lineHeight: 1.85, maxWidth: 500, fontWeight: 300 }}>
@@ -39,15 +39,15 @@ export default function JournalSection({ posts }: Props) {
               href={`/journal/${post.slug}`}
               style={{
                 background: "rgba(255,255,255,0.05)",
-                border: "1px solid rgba(232,184,75,0.15)",
+                border: "1px solid rgba(217,112,154,0.15)",
                 borderRadius: 16, padding: "28px 24px",
                 display: "block", textDecoration: "none",
                 transition: "background 0.2s, transform 0.2s",
               }}
-              onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(232,184,75,0.08)"; e.currentTarget.style.transform = "translateY(-4px)"; }}
+              onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(217,112,154,0.08)"; e.currentTarget.style.transform = "translateY(-4px)"; }}
               onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.05)"; e.currentTarget.style.transform = "translateY(0)"; }}
             >
-              <div style={{ fontFamily: "var(--font-playfair-display)", fontStyle: "italic", fontSize: 11, color: "#E8B84B", letterSpacing: "0.1em", marginBottom: 12 }}>
+              <div style={{ fontFamily: "var(--font-playfair-display)", fontStyle: "italic", fontSize: 11, color: "#d9709a", letterSpacing: "0.1em", marginBottom: 12 }}>
                 {post.date}
               </div>
               <h3 style={{ fontFamily: "var(--font-nanum-myeongjo)", fontSize: 16, fontWeight: 700, color: "rgba(255,255,255,0.9)", marginBottom: 10, lineHeight: 1.5 }}>

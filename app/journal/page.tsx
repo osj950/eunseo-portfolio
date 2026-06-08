@@ -22,16 +22,16 @@ export default async function JournalPage() {
         {/* 페이지 헤더 — 다크 배경 (시안 journal 섹션과 동일) */}
         <section
           className="r-section"
-          style={{ padding: "80px 60px 64px", background: "#2C1810", color: "white" }}
+          style={{ padding: "80px 60px 64px", background: "#2d1a35", color: "white" }}
         >
           <div style={{ maxWidth: 1100, margin: "0 auto" }}>
             <div
               className="eyebrow-line"
-              style={{ fontFamily: "var(--font-playfair-display)", fontStyle: "italic", fontSize: 12, letterSpacing: "0.15em", color: "#E8B84B", marginBottom: 14 }}
+              style={{ fontFamily: "var(--font-playfair-display)", fontStyle: "italic", fontSize: 12, letterSpacing: "0.15em", color: "#d9709a", marginBottom: 14 }}
             >
               기록
             </div>
-            <h1 style={{ fontFamily: "var(--font-nanum-myeongjo)", fontSize: "clamp(28px,4vw,44px)", fontWeight: 800, color: "#F5D98A", lineHeight: 1.25, marginBottom: 12 }}>
+            <h1 style={{ fontFamily: "var(--font-nanum-myeongjo)", fontSize: "clamp(28px,4vw,44px)", fontWeight: 800, color: "#f0aece", lineHeight: 1.25, marginBottom: 12 }}>
               생각들
             </h1>
             <p style={{ fontSize: 15, color: "rgba(255,255,255,0.6)", lineHeight: 1.85, maxWidth: 500, fontWeight: 300 }}>
@@ -43,7 +43,7 @@ export default async function JournalPage() {
         {/* 기록 목록 */}
         <section
           className="r-section"
-          style={{ padding: "64px 60px 96px", background: "#FBF7F0", flex: 1 }}
+          style={{ padding: "64px 60px 96px", background: "#f5e6ed", flex: 1 }}
         >
           <div style={{ maxWidth: 720, margin: "0 auto" }}>
             {posts.map((post, i) => (
@@ -54,24 +54,24 @@ export default async function JournalPage() {
                 style={{
                   display: "block",
                   padding: "28px 0",
-                  borderBottom: i < posts.length - 1 ? "1px solid rgba(107,66,38,0.1)" : "none",
+                  borderBottom: i < posts.length - 1 ? "1px solid rgba(125,53,88,0.1)" : "none",
                   textDecoration: "none",
                 }}
               >
                 <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 16, marginBottom: 10 }}>
-                  <div style={{ fontFamily: "var(--font-playfair-display)", fontStyle: "italic", fontSize: 11, color: "#E8B84B", letterSpacing: "0.1em" }}>
+                  <div style={{ fontFamily: "var(--font-playfair-display)", fontStyle: "italic", fontSize: 11, color: "#d9709a", letterSpacing: "0.1em" }}>
                     {(post as typeof FALLBACK[0]).date || post.createdAt?.slice(0, 7)}
                   </div>
                   {(post as typeof FALLBACK[0]).tag && (
-                    <span style={{ border: "1px solid rgba(107,66,38,0.2)", color: "#C4956A", padding: "2px 10px", borderRadius: 100, fontSize: 11, whiteSpace: "nowrap" }}>
+                    <span style={{ border: "1px solid rgba(125,53,88,0.2)", color: "#c47a9a", padding: "2px 10px", borderRadius: 100, fontSize: 11, whiteSpace: "nowrap" }}>
                       {(post as typeof FALLBACK[0]).tag}
                     </span>
                   )}
                 </div>
-                <h2 style={{ fontFamily: "var(--font-nanum-myeongjo)", fontSize: "clamp(17px,2.5vw,22px)", fontWeight: 700, color: "#2C1810", lineHeight: 1.4, marginBottom: 10 }}>
+                <h2 style={{ fontFamily: "var(--font-nanum-myeongjo)", fontSize: "clamp(17px,2.5vw,22px)", fontWeight: 700, color: "#2d1a35", lineHeight: 1.4, marginBottom: 10 }}>
                   {post.title}
                 </h2>
-                <p style={{ fontSize: 14, color: "#7A5C4A", lineHeight: 1.75, fontWeight: 300 }}>
+                <p style={{ fontSize: 14, color: "#8a5278", lineHeight: 1.75, fontWeight: 300 }}>
                   {post.excerpt}
                 </p>
               </Link>

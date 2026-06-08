@@ -5,7 +5,7 @@ export default function MainFooter() {
     <footer
       className="footer-pad"
       style={{
-        background: "#2C1810",
+        background: "#2d1a35",
         color: "rgba(255,255,255,0.4)",
         padding: "32px 60px",
         fontSize: 12,
@@ -16,7 +16,7 @@ export default function MainFooter() {
         gap: 10,
       }}
     >
-      <span style={{ fontFamily: "var(--font-playfair-display)", color: "#F5D98A", fontSize: 14 }}>
+      <span style={{ fontFamily: "var(--font-playfair-display)", color: "#f0aece", fontSize: 14 }}>
         Eunseo Ok · 옥은서
       </span>
       <span>배우고, 가르치고, 만드는 사람 🌻</span>

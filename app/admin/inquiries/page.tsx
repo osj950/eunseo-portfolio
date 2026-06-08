@@ -5,11 +5,11 @@ import { Inquiry } from "@/lib/types";
 
 const STATUS_LABEL: Record<Inquiry["status"], string> = { unread: "미확인", read: "확인", replied: "답변완료" };
 const STATUS_COLOR: Record<Inquiry["status"], string> = {
-  unread:  "rgba(232,184,75,0.25)",
-  read:    "rgba(107,66,38,0.08)",
-  replied: "rgba(107,66,38,0.04)",
+  unread:  "rgba(217,112,154,0.25)",
+  read:    "rgba(125,53,88,0.08)",
+  replied: "rgba(125,53,88,0.04)",
 };
-const STATUS_TEXT: Record<Inquiry["status"], string> = { unread: "#6B4226", read: "#C4956A", replied: "#C4956A" };
+const STATUS_TEXT: Record<Inquiry["status"], string> = { unread: "#7d3558", read: "#c47a9a", replied: "#c47a9a" };
 
 export default function AdminInquiriesPage() {
   const [inquiries, setInquiries] = useState<Inquiry[]>([]);
@@ -31,42 +31,42 @@ export default function AdminInquiriesPage() {
   return (
     <div>
       <div style={{ marginBottom: 36 }}>
-        <div className="eyebrow-line" style={{ fontFamily: "var(--font-playfair-display)", fontStyle: "italic", fontSize: 12, letterSpacing: "0.15em", color: "#C4956A", marginBottom: 10 }}>관리</div>
-        <h1 style={{ fontFamily: "var(--font-nanum-myeongjo)", fontSize: 28, fontWeight: 800, color: "#2C1810" }}>문의 관리</h1>
+        <div className="eyebrow-line" style={{ fontFamily: "var(--font-playfair-display)", fontStyle: "italic", fontSize: 12, letterSpacing: "0.15em", color: "#c47a9a", marginBottom: 10 }}>관리</div>
+        <h1 style={{ fontFamily: "var(--font-nanum-myeongjo)", fontSize: 28, fontWeight: 800, color: "#2d1a35" }}>문의 관리</h1>
       </div>
 
       {/* 상세 모달 */}
       {selected && (
-        <div style={{ position: "fixed", inset: 0, background: "rgba(44,24,16,0.5)", zIndex: 200, display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }}>
-          <div style={{ background: "#FBF7F0", maxWidth: 520, width: "100%", borderRadius: 20, padding: 36 }}>
-            <div style={{ fontFamily: "var(--font-playfair-display)", fontStyle: "italic", fontSize: 11, color: "#E8B84B", marginBottom: 4 }}>
+        <div style={{ position: "fixed", inset: 0, background: "rgba(45,26,53,0.5)", zIndex: 200, display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }}>
+          <div style={{ background: "#f5e6ed", maxWidth: 520, width: "100%", borderRadius: 20, padding: 36 }}>
+            <div style={{ fontFamily: "var(--font-playfair-display)", fontStyle: "italic", fontSize: 11, color: "#d9709a", marginBottom: 4 }}>
               {selected.createdAt.slice(0, 10)}
             </div>
-            <h2 style={{ fontFamily: "var(--font-nanum-myeongjo)", fontSize: 20, fontWeight: 800, color: "#2C1810", marginBottom: 6 }}>
+            <h2 style={{ fontFamily: "var(--font-nanum-myeongjo)", fontSize: 20, fontWeight: 800, color: "#2d1a35", marginBottom: 6 }}>
               {selected.subject || "(제목 없음)"}
             </h2>
-            <p style={{ fontSize: 13, color: "#C4956A", marginBottom: 20 }}>
+            <p style={{ fontSize: 13, color: "#c47a9a", marginBottom: 20 }}>
               {selected.name} · {selected.email}
             </p>
-            <p style={{ fontSize: 14, color: "#3D2314", lineHeight: 1.8, whiteSpace: "pre-wrap", marginBottom: 28, padding: "20px", background: "white", borderRadius: 10 }}>
+            <p style={{ fontSize: 14, color: "#3d2040", lineHeight: 1.8, whiteSpace: "pre-wrap", marginBottom: 28, padding: "20px", background: "white", borderRadius: 10 }}>
               {selected.message}
             </p>
             <div style={{ display: "flex", gap: 10 }}>
               <button
                 onClick={() => { updateStatus(selected.id, "read"); setSelected(null); }}
-                style={{ fontSize: 12, color: "#7A5C4A", background: "transparent", border: "1px solid rgba(107,66,38,0.2)", borderRadius: 100, padding: "8px 18px", cursor: "pointer" }}
+                style={{ fontSize: 12, color: "#8a5278", background: "transparent", border: "1px solid rgba(125,53,88,0.2)", borderRadius: 100, padding: "8px 18px", cursor: "pointer" }}
               >
                 확인 처리
               </button>
               <button
                 onClick={() => { updateStatus(selected.id, "replied"); setSelected(null); }}
-                style={{ fontSize: 12, color: "#FDF3DC", background: "#6B4226", border: "none", borderRadius: 100, padding: "8px 18px", cursor: "pointer" }}
+                style={{ fontSize: 12, color: "#fce8f4", background: "#7d3558", border: "none", borderRadius: 100, padding: "8px 18px", cursor: "pointer" }}
               >
                 답변완료
               </button>
               <button
                 onClick={() => setSelected(null)}
-                style={{ marginLeft: "auto", fontSize: 12, color: "#C4956A", background: "transparent", border: "none", cursor: "pointer" }}
+                style={{ marginLeft: "auto", fontSize: 12, color: "#c47a9a", background: "transparent", border: "none", cursor: "pointer" }}
               >
                 닫기 ✕
               </button>
@@ -75,11 +75,11 @@ export default function AdminInquiriesPage() {
         </div>
       )}
 
-      <div style={{ background: "white", borderRadius: 16, border: "1px solid rgba(107,66,38,0.08)", overflow: "hidden" }}>
+      <div style={{ background: "white", borderRadius: 16, border: "1px solid rgba(125,53,88,0.08)", overflow: "hidden" }}>
         {loading ? (
-          <div style={{ padding: 32, fontSize: 14, color: "#C4956A" }}>불러오는 중...</div>
+          <div style={{ padding: 32, fontSize: 14, color: "#c47a9a" }}>불러오는 중...</div>
         ) : inquiries.length === 0 ? (
-          <div style={{ padding: 32, fontSize: 14, color: "#C4956A" }}>문의가 없습니다.</div>
+          <div style={{ padding: 32, fontSize: 14, color: "#c47a9a" }}>문의가 없습니다.</div>
         ) : inquiries.map((inq, i) => (
           <div
             key={inq.id}
@@ -91,19 +91,19 @@ export default function AdminInquiriesPage() {
               width: "100%",
               display: "flex", alignItems: "center", justifyContent: "space-between",
               padding: "18px 24px", textAlign: "left",
-              borderBottom: i < inquiries.length - 1 ? "1px solid rgba(107,66,38,0.07)" : "none",
+              borderBottom: i < inquiries.length - 1 ? "1px solid rgba(125,53,88,0.07)" : "none",
               cursor: "pointer", transition: "background 0.15s",
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(107,66,38,0.03)")}
+            onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(125,53,88,0.03)")}
             onMouseLeave={(e) => (e.currentTarget.style.background = "none")}
           >
             <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ fontSize: 11, color: "#C4956A", marginBottom: 4 }}>
+              <div style={{ fontSize: 11, color: "#c47a9a", marginBottom: 4 }}>
                 {inq.createdAt.slice(0, 10)} · {inq.name} · {inq.email}
               </div>
               <p style={{
                 fontFamily: "var(--font-nanum-myeongjo)", fontSize: 15,
-                color: "#2C1810", fontWeight: inq.status === "unread" ? 700 : 400,
+                color: "#2d1a35", fontWeight: inq.status === "unread" ? 700 : 400,
               }}>
                 {inq.subject || "(제목 없음)"}
               </p>

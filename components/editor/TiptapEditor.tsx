@@ -54,18 +54,18 @@ const BTN_BASE: React.CSSProperties = {
   background: "transparent", border: "none", cursor: "pointer",
   borderRadius: 5, width: 30, height: 28,
   display: "flex", alignItems: "center", justifyContent: "center",
-  fontSize: 13, color: "#6B4226", transition: "background 0.15s",
+  fontSize: 13, color: "#7d3558", transition: "background 0.15s",
   flexShrink: 0,
 };
 const BTN_ACTIVE: React.CSSProperties = {
-  ...BTN_BASE, background: "#E8B84B", color: "#2C1810",
+  ...BTN_BASE, background: "#d9709a", color: "#2d1a35",
 };
 const DIVIDER: React.CSSProperties = {
-  width: 1, height: 18, background: "rgba(107,66,38,0.18)", margin: "0 4px", flexShrink: 0,
+  width: 1, height: 18, background: "rgba(125,53,88,0.18)", margin: "0 4px", flexShrink: 0,
 };
 const SELECT_STYLE: React.CSSProperties = {
-  border: "1px solid rgba(107,66,38,0.2)", borderRadius: 5,
-  background: "transparent", fontSize: 12, color: "#6B4226",
+  border: "1px solid rgba(125,53,88,0.2)", borderRadius: 5,
+  background: "transparent", fontSize: 12, color: "#7d3558",
   padding: "2px 6px", cursor: "pointer", height: 28, outline: "none",
 };
 
@@ -129,10 +129,10 @@ export default function TiptapEditor({ value, onChange }: Props) {
   const currentFontSize   = editor.getAttributes("textStyle").fontSize   ?? "";
 
   return (
-    <div style={{ border: "1px solid rgba(107,66,38,0.2)", borderRadius: 10, overflow: "hidden", background: "white" }}>
+    <div style={{ border: "1px solid rgba(125,53,88,0.2)", borderRadius: 10, overflow: "hidden", background: "white" }}>
 
       {/* ── 툴바 ── */}
-      <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 2, padding: "8px 10px", borderBottom: "1px solid rgba(107,66,38,0.1)", background: "#FFFDF9" }}>
+      <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 2, padding: "8px 10px", borderBottom: "1px solid rgba(125,53,88,0.1)", background: "#fdf5f9" }}>
 
         {/* 서식 */}
         <button title="굵게 (Ctrl+B)" style={editor.isActive("bold")      ? BTN_ACTIVE : BTN_BASE} onMouseDown={(e) => { e.preventDefault(); editor.chain().focus().toggleBold().run(); }}>
@@ -245,35 +245,35 @@ export default function TiptapEditor({ value, onChange }: Props) {
 
       {/* ── 링크 입력 패널 ── */}
       {linkOpen && (
-        <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "8px 12px", borderBottom: "1px solid rgba(107,66,38,0.1)", background: "#FFFDF9" }}>
-          <span style={{ fontSize: 11, color: "#C4956A", fontWeight: 500, whiteSpace: "nowrap" }}>링크 URL</span>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "8px 12px", borderBottom: "1px solid rgba(125,53,88,0.1)", background: "#fdf5f9" }}>
+          <span style={{ fontSize: 11, color: "#c47a9a", fontWeight: 500, whiteSpace: "nowrap" }}>링크 URL</span>
           <input
             autoFocus
             value={linkUrl}
             onChange={(e) => setLinkUrl(e.target.value)}
             onKeyDown={(e) => { if (e.key === "Enter") applyLink(); if (e.key === "Escape") setLinkOpen(false); }}
             placeholder="https://example.com"
-            style={{ flex: 1, border: "1px solid rgba(107,66,38,0.25)", borderRadius: 6, padding: "5px 10px", fontSize: 13, color: "#2C1810", outline: "none", background: "white" }}
+            style={{ flex: 1, border: "1px solid rgba(125,53,88,0.25)", borderRadius: 6, padding: "5px 10px", fontSize: 13, color: "#2d1a35", outline: "none", background: "white" }}
           />
-          <button onClick={applyLink} style={{ background: "#6B4226", color: "#FDF3DC", border: "none", borderRadius: 6, padding: "5px 14px", fontSize: 12, cursor: "pointer" }}>확인</button>
-          <button onClick={() => setLinkOpen(false)} style={{ background: "none", color: "#C4956A", border: "none", fontSize: 12, cursor: "pointer" }}>취소</button>
+          <button onClick={applyLink} style={{ background: "#7d3558", color: "#fce8f4", border: "none", borderRadius: 6, padding: "5px 14px", fontSize: 12, cursor: "pointer" }}>확인</button>
+          <button onClick={() => setLinkOpen(false)} style={{ background: "none", color: "#c47a9a", border: "none", fontSize: 12, cursor: "pointer" }}>취소</button>
         </div>
       )}
 
       {/* ── 이미지 URL 입력 패널 ── */}
       {imageOpen && (
-        <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "8px 12px", borderBottom: "1px solid rgba(107,66,38,0.1)", background: "#FFFDF9" }}>
-          <span style={{ fontSize: 11, color: "#C4956A", fontWeight: 500, whiteSpace: "nowrap" }}>이미지 URL</span>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "8px 12px", borderBottom: "1px solid rgba(125,53,88,0.1)", background: "#fdf5f9" }}>
+          <span style={{ fontSize: 11, color: "#c47a9a", fontWeight: 500, whiteSpace: "nowrap" }}>이미지 URL</span>
           <input
             autoFocus
             value={imageUrl}
             onChange={(e) => setImageUrl(e.target.value)}
             onKeyDown={(e) => { if (e.key === "Enter") applyImage(); if (e.key === "Escape") setImageOpen(false); }}
             placeholder="https://example.com/image.jpg"
-            style={{ flex: 1, border: "1px solid rgba(107,66,38,0.25)", borderRadius: 6, padding: "5px 10px", fontSize: 13, color: "#2C1810", outline: "none", background: "white" }}
+            style={{ flex: 1, border: "1px solid rgba(125,53,88,0.25)", borderRadius: 6, padding: "5px 10px", fontSize: 13, color: "#2d1a35", outline: "none", background: "white" }}
           />
-          <button onClick={applyImage} style={{ background: "#6B4226", color: "#FDF3DC", border: "none", borderRadius: 6, padding: "5px 14px", fontSize: 12, cursor: "pointer" }}>삽입</button>
-          <button onClick={() => setImageOpen(false)} style={{ background: "none", color: "#C4956A", border: "none", fontSize: 12, cursor: "pointer" }}>취소</button>
+          <button onClick={applyImage} style={{ background: "#7d3558", color: "#fce8f4", border: "none", borderRadius: 6, padding: "5px 14px", fontSize: 12, cursor: "pointer" }}>삽입</button>
+          <button onClick={() => setImageOpen(false)} style={{ background: "none", color: "#c47a9a", border: "none", fontSize: 12, cursor: "pointer" }}>취소</button>
         </div>
       )}
 

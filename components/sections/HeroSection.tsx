@@ -20,7 +20,7 @@ export default function HeroSection() {
           position: "absolute",
           inset: 0,
           background:
-            "radial-gradient(ellipse 50% 60% at 80% 40%, rgba(232,184,75,0.2) 0%, transparent 60%), radial-gradient(ellipse 40% 40% at 10% 80%, rgba(192,57,43,0.08) 0%, transparent 50%), #FBF7F0",
+            "radial-gradient(ellipse 50% 60% at 80% 40%, rgba(217,112,154,0.2) 0%, transparent 60%), radial-gradient(ellipse 40% 40% at 10% 80%, rgba(192,57,94,0.08) 0%, transparent 50%), #f5e6ed",
         }}
       />
 
@@ -34,7 +34,7 @@ export default function HeroSection() {
           width: "clamp(280px,35vw,480px)",
           height: "clamp(280px,35vw,480px)",
           borderRadius: "50%",
-          background: "radial-gradient(circle at 40% 40%, #F5D98A, #E8B84B)",
+          background: "radial-gradient(circle at 40% 40%, #f0aece, #d9709a)",
           opacity: 0.25,
         }}
       />
@@ -49,7 +49,7 @@ export default function HeroSection() {
           width: "clamp(100px,12vw,160px)",
           height: "clamp(100px,12vw,160px)",
           borderRadius: "50%",
-          background: "#C0392B",
+          background: "#c0395e",
           opacity: 0.08,
         }}
       />
@@ -63,7 +63,7 @@ export default function HeroSection() {
             fontFamily: "var(--font-playfair-display)",
             fontStyle: "italic",
             fontSize: 13,
-            color: "#C4956A",
+            color: "#c47a9a",
             letterSpacing: "0.1em",
             marginBottom: 24,
           }}
@@ -79,7 +79,7 @@ export default function HeroSection() {
             fontSize: "clamp(52px,8vw,88px)",
             fontWeight: 800,
             lineHeight: 1.1,
-            color: "#2C1810",
+            color: "#2d1a35",
             marginBottom: 8,
           }}
         >
@@ -92,7 +92,7 @@ export default function HeroSection() {
           style={{
             fontFamily: "var(--font-playfair-display)",
             fontSize: "clamp(20px,3vw,32px)",
-            color: "#C4956A",
+            color: "#c47a9a",
             marginBottom: 32,
             letterSpacing: "0.05em",
           }}
@@ -107,11 +107,11 @@ export default function HeroSection() {
             fontFamily: "var(--font-nanum-myeongjo)",
             fontSize: "clamp(18px,2.5vw,26px)",
             fontWeight: 700,
-            color: "#6B4226",
+            color: "#7d3558",
             marginBottom: 20,
           }}
         >
-          배우고, <em style={{ fontStyle: "normal", color: "#C0392B" }}>가르치고</em>, 만드는 사람
+          배우고, <em style={{ fontStyle: "normal", color: "#c0395e" }}>가르치고</em>, 만드는 사람
         </p>
 
         {/* 태그 */}
@@ -127,13 +127,13 @@ export default function HeroSection() {
             <span
               key={label}
               style={{
-                background: red ? "rgba(192,57,43,0.08)" : "#F2E8DC",
-                color: red ? "#C0392B" : "#6B4226",
+                background: red ? "rgba(192,57,94,0.08)" : "#edd6e4",
+                color: red ? "#c0395e" : "#7d3558",
                 padding: "6px 16px",
                 borderRadius: 100,
                 fontSize: 12,
                 fontWeight: 500,
-                border: `1px solid ${red ? "rgba(192,57,43,0.2)" : "rgba(107,66,38,0.15)"}`,
+                border: `1px solid ${red ? "rgba(192,57,94,0.2)" : "rgba(125,53,88,0.15)"}`,
               }}
             >
               {label}
@@ -146,8 +146,8 @@ export default function HeroSection() {
           <a
             href="#work"
             style={{
-              background: "#6B4226",
-              color: "#FDF3DC",
+              background: "#7d3558",
+              color: "#fce8f4",
               padding: "13px 32px",
               borderRadius: 100,
               fontSize: 13,
@@ -157,11 +157,11 @@ export default function HeroSection() {
               display: "inline-block",
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.background = "#8B5A3C";
+              e.currentTarget.style.background = "#8b4a72";
               e.currentTarget.style.transform = "translateY(-2px)";
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.background = "#6B4226";
+              e.currentTarget.style.background = "#7d3558";
               e.currentTarget.style.transform = "translateY(0)";
             }}
           >
@@ -170,8 +170,8 @@ export default function HeroSection() {
           <a
             href="#contact"
             style={{
-              border: "1.5px solid #C4956A",
-              color: "#6B4226",
+              border: "1.5px solid #c47a9a",
+              color: "#7d3558",
               padding: "13px 32px",
               borderRadius: 100,
               fontSize: 13,
@@ -181,13 +181,13 @@ export default function HeroSection() {
               display: "inline-block",
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.background = "#6B4226";
-              e.currentTarget.style.color = "#FDF3DC";
+              e.currentTarget.style.background = "#7d3558";
+              e.currentTarget.style.color = "#fce8f4";
               e.currentTarget.style.transform = "translateY(-2px)";
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.background = "transparent";
-              e.currentTarget.style.color = "#6B4226";
+              e.currentTarget.style.color = "#7d3558";
               e.currentTarget.style.transform = "translateY(0)";
             }}
           >
